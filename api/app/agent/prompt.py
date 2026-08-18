@@ -171,3 +171,11 @@ REPAIR_TEMPLATE = (
     "cannot name a real evidence record id, either lower its support level to INFERRED "
     "or UNKNOWN, or remove the claim. Valid record ids are the ones the tools returned."
 )
+
+
+MALFORMED_TEMPLATE = (
+    "Your submit_answer call did not match the response schema:\n\n{problem}\n\n"
+    "Call submit_answer again with every required field present and within its limits. "
+    "If the answer was too long, say the same thing in fewer words — length is not "
+    "thoroughness, and the claims array is where the detail belongs."
+)

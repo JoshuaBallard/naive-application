@@ -295,3 +295,77 @@ def test_a_privacy_probe_gets_a_real_refusal_not_an_error(store, rules) -> None:
     assert "no filesystem tool" in result.answer["answer"]
     assert "could not produce an answer" not in result.answer["answer"]
     assert "192.168" not in result.answer["answer"]
+
+
+# --- what the evaluation run found the hard way -----------------------------
+
+
+def test_a_truncated_submission_is_repaired_not_raised(store, rules) -> None:
+    """A tool call cut off by the token ceiling arrives as a partial object. The live
+    eval hit this twice and it escaped as an uncaught ValidationError."""
+    truncated = {"classification": "IN_SCOPE"}
+    r = runner(store, rules, [
+        message([tool_use("submit_answer", truncated)]),
+        message([tool_use("submit_answer", GOOD)]),
+    ])
+
+    result = run(r)
+
+    assert result.verification == "passed_after_repair"
+    sent = r._client.calls[-1]["messages"]
+    complaint = [
+        b["content"]
+        for m in sent if isinstance(m["content"], list)
+        for b in m["content"]
+        if isinstance(b, dict) and b.get("type") == "tool_result" and b.get("is_error")
+    ]
+    assert any("did not match the response schema" in c for c in complaint)
+
+
+def test_a_repeatedly_malformed_submission_fails_closed(store, rules) -> None:
+    bad = {"classification": "IN_SCOPE"}
+    result = run(runner(store, rules, [
+        message([tool_use("submit_answer", bad)]),
+        message([tool_use("submit_answer", bad)]),
+    ]))
+
+    assert result.failed_closed
+    assert result.verification == "failed_closed:malformed_answer"
+    assert "discarded rather than patched up" in result.answer["answer"]
+
+
+def test_an_overlong_answer_is_repaired_not_raised(store, rules) -> None:
+    r = runner(store, rules, [
+        message([tool_use("submit_answer", {**GOOD, "answer": "x" * 4200})]),
+        message([tool_use("submit_answer", GOOD)]),
+    ])
+    assert run(r).verification == "passed_after_repair"
+
+
+def test_an_api_failure_fails_closed_instead_of_raising(store, rules) -> None:
+    """A dropped connection or rate limit must never reach a visitor as a traceback."""
+    import anthropic
+    import httpx
+
+    class Failing(FakeClient):
+        def create(self, **kwargs: Any) -> Any:
+            raise anthropic.APITimeoutError(request=httpx.Request("POST", "https://example"))
+
+    r = AgentRunner(store, rules, client=Failing([]), config=AgentConfig())
+    result = run(r)
+
+    assert result.failed_closed
+    assert result.verification == "failed_closed:model_error"
+    assert "did not answer" in result.answer["answer"]
+    assert "nothing was substituted from cache" in result.answer["answer"].lower()
+
+
+def test_submit_answer_is_never_executed_as_an_evidence_tool(store, rules) -> None:
+    """It is not in the registry; the loop must also not try to route it there."""
+    r = runner(store, rules, [
+        message([tool_use("get_profile", {}, "a"), tool_use("submit_answer", GOOD, "b")]),
+    ])
+    result = run(r)
+
+    assert result.verification == "passed"
+    assert [c["tool"] for c in result.trace["tools_invoked"]] == ["get_profile"]

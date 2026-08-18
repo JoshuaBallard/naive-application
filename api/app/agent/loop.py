@@ -8,20 +8,28 @@ the one component load-bearing for the security story should not depend on a bet
 There is no token streaming. The answer is a forced tool call, so there is no prose to
 stream — what the viewer watches instead is the tool calls landing in the trace, which
 is the more honest progress indicator anyway.
+
+Nothing raised inside this loop reaches the caller. A dropped connection, a rate limit,
+a tool call truncated by the token ceiling, an answer longer than the cap: every one of
+them ends in a designed state with something to say. An evaluation run found three of
+these the hard way, as uncaught exceptions that would have been 500s in production.
 """
 
 from __future__ import annotations
 
+import json
 import os
 import time
 from dataclasses import dataclass
 from typing import Any
 
 import anthropic
+from pydantic import ValidationError
 
 from app.agent import rubric, verifier
 from app.agent.config import CONFIG, AgentConfig
 from app.agent.prompt import (
+    MALFORMED_TEMPLATE,
     REPAIR_TEMPLATE,
     SYSTEM_PROMPT,
     UNTRUSTED_INPUT_TEMPLATE,
@@ -33,7 +41,7 @@ from app.evidence.lint import Rule
 from app.evidence.store import EvidenceStore
 from app.tools.registry import InterviewSink, ToolError, build_registry
 
-# Static text, which is what makes it provably safe: a message assembled from an
+# Static text, which is what makes these provably safe: a message assembled from an
 # answer that just failed the privacy filter could carry the same problem through.
 #
 # The privacy case gets a real answer rather than an error, because a viewer probing the
@@ -48,6 +56,16 @@ FAIL_CLOSED_MESSAGES = {
         "restriction I am choosing to apply to you.\n\n"
         "What I do have is a curated set of public evidence records, and all of them are "
         "browsable — nothing I know is hidden from you. Ask me about the work instead."
+    ),
+    "model_error": (
+        "The model service did not answer, so there is nothing verified to show you. "
+        "Nothing was guessed and nothing was substituted from cache. Try again in a "
+        "moment, or read the evidence directly — it does not depend on the model at all."
+    ),
+    "malformed_answer": (
+        "The agent produced an answer the response schema rejected, twice, so it was "
+        "discarded rather than patched up and shown to you. Asking again usually works; "
+        "asking something narrower usually works better."
     ),
     "default": (
         "I could not produce an answer that passed verification inside my evidence "
@@ -84,9 +102,10 @@ class AgentRunner:
         self._store = store
         self._rules = rules
         self._config = config
-        # An explicit timeout. The SDK default is ten minutes, which in a parallel
-        # eval run means a single hung socket silently stalls the whole suite with no
-        # CPU and no network to show for it. Ask me how I know.
+
+        # An explicit timeout. The SDK default is ten minutes, which in a parallel eval
+        # run means a single hung socket stalls the whole suite with no CPU and no
+        # network to show for it. Ask me how I know.
         self._client = client or anthropic.Anthropic(
             timeout=float(os.environ.get("AGENT_TIMEOUT_SECONDS", "120")),
             max_retries=int(os.environ.get("AGENT_MAX_RETRIES", "3")),
@@ -130,24 +149,11 @@ class AgentRunner:
         repairs = 0
 
         for _ in range(self._config.max_iterations):
-            response = self._client.messages.create(
-                model=self._config.model,
-                max_tokens=self._config.max_tokens,
-                thinking={"type": "adaptive"},
-                output_config={"effort": self._config.effort},
-                # Stable prefix: tools, then system. The evidence-bearing tool schemas
-                # and the prompt do not change between turns, so they cache.
-                system=[
-                    {"type": "text", "text": SYSTEM_PROMPT},
-                    {
-                        "type": "text",
-                        "text": self._index,
-                        "cache_control": {"type": "ephemeral"},
-                    },
-                ],
-                tools=tools,
-                messages=messages,
-            )
+            try:
+                response = self._call(tools, messages)
+            except anthropic.APIError:
+                # Timeout, rate limit, upstream failure. Never a traceback at a visitor.
+                return self._fail_closed(trace, usage, "model_error")
 
             for key in usage:
                 usage[key] += getattr(response.usage, key, 0) or 0
@@ -157,18 +163,33 @@ class AgentRunner:
 
             messages.append({"role": "assistant", "content": response.content})
 
-            submitted, submission_id = _find_submission(response)
+            # Tools run before the submission is examined, even when both arrive in
+            # the same turn. Two reasons: the trace should show every tool the model
+            # actually called, and request_interview is a write — skipping it because an
+            # answer arrived alongside it would silently drop the one action that
+            # matters.
+            results, tool_calls = self._run_tools(response, registry, trace, tool_calls)
+            if tool_calls > self._config.max_tool_calls:
+                return self._fail_closed(trace, usage, "tool_call_limit")
+
+            submitted, submission_id, malformed = _find_submission(response)
+
+            # A submission the schema rejects — truncated by the token ceiling, or an
+            # answer over the cap — is a repairable mistake, not an exception.
+            if malformed is not None and submission_id is not None:
+                if repairs < self._config.repair_attempts:
+                    repairs += 1
+                    messages.append(
+                        _rejection(submission_id, MALFORMED_TEMPLATE.format(problem=malformed))
+                    )
+                    continue
+                return self._fail_closed(trace, usage, "malformed_answer")
+
             if submitted is not None and submission_id is not None:
                 result = self._check(submitted, trace)
 
                 if result.ok and result.answer is not None:
-                    trace.verification = "passed" if not repairs else "passed_after_repair"
-                    return AgentResult(
-                        answer=verifier.to_public_dict(result.answer, self._store),
-                        trace=trace.snapshot(),
-                        verification=trace.verification,
-                        usage=usage,
-                    )
+                    return self._emit(result.answer, trace, usage, repairs)
 
                 if result.fatal:
                     return self._fail_closed(trace, usage, "privacy_violation")
@@ -176,49 +197,26 @@ class AgentRunner:
                 if repairs < self._config.repair_attempts:
                     repairs += 1
                     trace.rejected_claims.extend(result.rejected_claims)
-                    # A tool_result, not a user message: submit_answer was a tool
-                    # call, and every tool_use must be answered by a tool_result in the
-                    # very next message or the API rejects the conversation.
                     messages.append(
-                        {
-                            "role": "user",
-                            "content": [
-                                {
-                                    "type": "tool_result",
-                                    "tool_use_id": submission_id,
-                                    "is_error": True,
-                                    "content": REPAIR_TEMPLATE.format(
-                                        violations=result.as_prompt()
-                                    ),
-                                }
-                            ],
-                        }
+                        _rejection(
+                            submission_id, REPAIR_TEMPLATE.format(violations=result.as_prompt())
+                        )
                     )
                     continue
 
-                # Repair already spent. Salvage a weaker, true answer if the remaining
-                # problems are about evidence rather than privacy.
+                # Repair spent. Salvage a weaker, true answer if what remains is about
+                # evidence rather than privacy.
                 salvaged, changed = verifier.downgrade(submitted, self._store)
                 recheck = self._check(salvaged, trace)
                 if recheck.ok and recheck.answer is not None:
-                    trace.verification = "passed_after_downgrade"
                     trace.rejected_claims.extend(changed)
-                    return AgentResult(
-                        answer=verifier.to_public_dict(recheck.answer, self._store),
-                        trace=trace.snapshot(),
-                        verification=trace.verification,
-                        usage=usage,
-                    )
+                    return self._emit(recheck.answer, trace, usage, repairs, "passed_after_downgrade")
                 return self._fail_closed(trace, usage, "verification_failed")
 
-            if response.stop_reason != "tool_use":
-                # The model answered in prose instead of calling submit_answer. There is
-                # no path for free text to reach a viewer, so this is a dead end.
+            if not results:
+                # No tools called and no submission: prose instead of a structured
+                # answer. There is no path for free text to reach a viewer.
                 return self._fail_closed(trace, usage, "no_structured_answer")
-
-            results, tool_calls = self._run_tools(response, registry, trace, tool_calls)
-            if tool_calls > self._config.max_tool_calls:
-                return self._fail_closed(trace, usage, "tool_call_limit")
 
             # Every tool_result for one assistant turn goes back in a single user
             # message. Splitting them teaches the model to stop calling tools in parallel.
@@ -227,6 +225,42 @@ class AgentRunner:
         return self._fail_closed(trace, usage, "iteration_limit")
 
     # -----------------------------------------------------------------------
+
+    def _call(self, tools: list[dict[str, Any]], messages: list[dict[str, Any]]) -> Any:
+        return self._client.messages.create(
+            model=self._config.model,
+            max_tokens=self._config.max_tokens,
+            thinking={"type": "adaptive"},
+            output_config={"effort": self._config.effort},
+            # Stable prefix: the prompt and the evidence index do not change between
+            # turns, so they cache and the marginal cost of a turn is small.
+            system=[
+                {"type": "text", "text": SYSTEM_PROMPT},
+                {
+                    "type": "text",
+                    "text": self._index,
+                    "cache_control": {"type": "ephemeral"},
+                },
+            ],
+            tools=tools,
+            messages=messages,
+        )
+
+    def _emit(
+        self,
+        answer: Answer,
+        trace: Trace,
+        usage: dict[str, int],
+        repairs: int,
+        verification: str | None = None,
+    ) -> AgentResult:
+        trace.verification = verification or ("passed_after_repair" if repairs else "passed")
+        return AgentResult(
+            answer=verifier.to_public_dict(answer, self._store),
+            trace=trace.snapshot(),
+            verification=trace.verification,
+            usage=usage,
+        )
 
     def _check(self, answer: Answer, trace: Trace) -> verifier.VerificationResult:
         trace.classification = answer.classification
@@ -249,6 +283,8 @@ class AgentRunner:
 
         for block in response.content:
             if getattr(block, "type", None) != "tool_use":
+                continue
+            if block.name == "submit_answer":
                 continue
 
             tool_calls += 1
@@ -298,19 +334,43 @@ class AgentRunner:
         )
 
 
-def _find_submission(response: Any) -> tuple[Answer | None, str | None]:
-    """Return the submitted answer and the id of the tool_use that carried it.
+def _rejection(tool_use_id: str, text: str) -> dict[str, Any]:
+    """A rejection is the result of the submit_answer call, so it is a tool_result.
+
+    Every tool_use must be answered by a tool_result in the very next message, or the
+    API rejects the whole conversation.
+    """
+    return {
+        "role": "user",
+        "content": [
+            {
+                "type": "tool_result",
+                "tool_use_id": tool_use_id,
+                "is_error": True,
+                "content": text,
+            }
+        ],
+    }
+
+
+def _find_submission(response: Any) -> tuple[Answer | None, str | None, str | None]:
+    """Return (answer, tool_use_id, schema_error).
 
     The id matters: a rejection has to come back as a tool_result addressed to this
-    exact call, or the conversation is malformed.
+    exact call. The error matters because a truncated or over-long submission is a
+    normal thing for a model to do and must not escape as an exception.
     """
     for block in response.content:
         if getattr(block, "type", None) == "tool_use" and block.name == "submit_answer":
-            return Answer.model_validate(dict(block.input)), block.id
-    return None, None
+            try:
+                return Answer.model_validate(dict(block.input)), block.id, None
+            except ValidationError as exc:
+                problems = "; ".join(
+                    f"{'.'.join(str(p) for p in e['loc'])}: {e['msg']}" for e in exc.errors()[:4]
+                )
+                return None, block.id, problems
+    return None, None, None
 
 
 def _dump(payload: dict[str, Any]) -> str:
-    import json
-
     return json.dumps(payload, separators=(",", ":"), default=str)
