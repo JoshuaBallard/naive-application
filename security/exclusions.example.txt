@@ -11,7 +11,7 @@
 # Example Corp
 
 # --- Clearances, programs, contract vehicles ---
-# Top Secret
+# Some Named Clearance
 
 # --- Military unit and base assignments ---
 # 1st Example Battalion

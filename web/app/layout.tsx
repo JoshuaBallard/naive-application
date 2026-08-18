@@ -9,12 +9,13 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-const NAV = [
+const NAV: { href: string; label: string; cta?: boolean }[] = [
   { href: "/", label: "Ask" },
   { href: "/fit", label: "Fit" },
   { href: "/evidence", label: "Evidence" },
   { href: "/architecture", label: "Architecture" },
   { href: "/red-team", label: "Red team" },
+  { href: "/talk", label: "Talk", cta: true },
 ];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -44,12 +45,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             >
               APPLICATION&nbsp;AGENT
             </Link>
-            <nav className="flex gap-1 overflow-x-auto">
+            <nav className="flex flex-1 items-center gap-1 overflow-x-auto">
               {NAV.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="whitespace-nowrap px-3 py-3.5 text-[13px] text-muted no-underline transition-colors hover:text-ink"
+                  className={
+                    item.cta
+                      ? "ml-auto whitespace-nowrap rounded-[3px] border border-supported/40 px-3 py-1.5 text-[13px] text-supported no-underline transition-colors hover:bg-supported/10"
+                      : "whitespace-nowrap px-3 py-3.5 text-[13px] text-muted no-underline transition-colors hover:text-ink"
+                  }
                 >
                   {item.label}
                 </Link>

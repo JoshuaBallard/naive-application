@@ -36,7 +36,7 @@ class AgentConfig:
     max_question_chars: int = _int("AGENT_MAX_QUESTION_CHARS", 1200)
 
     # One repair attempt. Two would be arguing with the verifier.
-    repair_attempts: int = _int("AGENT_REPAIR_ATTEMPTS", 1)
+    repair_attempts: int = _int("AGENT_REPAIR_ATTEMPTS", 2)
 
     # A viewer gets a fixed number of questions, and is told so up front. This is a
     # cost control, and it is also the better interaction: a person with eight

@@ -50,6 +50,19 @@ async def lifespan(_: FastAPI):
 
 app = FastAPI(title="Application agent", docs_url=None, redoc_url=None, lifespan=lifespan)
 
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    """The API is normally reached through the web tier's server-side proxy, so a
+    browser rarely sees these. They are set anyway: "nobody should be calling this
+    directly" is an assumption, and assumptions are what get tested."""
+    response = await call_next(request)
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["X-Frame-Options"] = "DENY"
+    return response
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS or ["http://localhost:3000"],
