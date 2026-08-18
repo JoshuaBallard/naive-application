@@ -1,0 +1,32 @@
+# Secrets. Never.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# The compiled artifact is a build output, not source.
+build/
+
+# Raw, un-sanitized scratch. The build never reads this and git never sees it.
+evidence/raw/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+.next/
+out/
+
+# Local editor / OS
+.DS_Store
+.claude/settings.local.json
+
+# The personal exclusion list is as sensitive as the facts it excludes.
+security/exclusions.local.txt
