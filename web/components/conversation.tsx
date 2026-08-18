@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api, ApiError } from "@/lib/api";
+import { useSession } from "@/lib/session";
 import type { AskResult } from "@/lib/types";
 import { Cite, StatusChip } from "./status";
 
@@ -23,26 +24,12 @@ interface Turn {
 }
 
 export function Conversation({ budget }: { budget: number }) {
-  const [sessionId, setSessionId] = useState<string | null>(null);
-  const [remaining, setRemaining] = useState(budget);
+  const { sessionId, remaining, error: blocked, spend } = useSession(budget);
   const [turns, setTurns] = useState<Turn[]>([]);
   const [draft, setDraft] = useState("");
-  const [blocked, setBlocked] = useState<string | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
   const busy = turns.some((t) => t.pending);
-
-  useEffect(() => {
-    api
-      .startSession()
-      .then((s) => {
-        setSessionId(s.session_id);
-        setRemaining(s.questions_remaining);
-      })
-      .catch((e: unknown) =>
-        setBlocked(e instanceof ApiError ? e.message : "Could not start a session."),
-      );
-  }, []);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -58,7 +45,7 @@ export function Conversation({ budget }: { budget: number }) {
 
       try {
         const result = await api.ask(sessionId, trimmed);
-        setRemaining(result.questions_remaining);
+        spend(result.questions_remaining);
         setTurns((prev) =>
           prev.map((t, i) => (i === prev.length - 1 ? { ...t, result, pending: false } : t)),
         );
@@ -68,7 +55,7 @@ export function Conversation({ budget }: { budget: number }) {
         setTurns((prev) =>
           prev.map((t, i) => (i === prev.length - 1 ? { ...t, error: message, pending: false } : t)),
         );
-        if (e instanceof ApiError && (e.status === 429 || e.status === 503)) setRemaining(0);
+        if (e instanceof ApiError && (e.status === 429 || e.status === 503)) spend(0);
       }
     },
     [sessionId, busy, remaining],
