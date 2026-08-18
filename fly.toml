@@ -10,13 +10,16 @@ primary_region = "ord"
 [build]
   dockerfile = "api/Dockerfile"
 
+# These override the defaults in api/app/agent/config.py and api/app/main.py. When
+# the two disagree, this file wins — which is worth remembering, because raising a
+# limit in code and redeploying changes nothing if the value is pinned here.
 [env]
   DATABASE_PATH = "/data/application.db"
   AGENT_MODEL = "claude-sonnet-5"
   AGENT_EFFORT = "medium"
   AGENT_QUESTIONS_PER_SESSION = "8"
   DAILY_SPEND_CAP_USD = "3"
-  MAX_SESSIONS_PER_IP = "6"
+  MAX_SESSIONS_PER_IP = "20"
   EVIDENCE_EXCLUSIONS_FILE = "/repo/security/exclusions.local.txt"
 
 # Secrets, set with `fly secrets set` and never in this file:
