@@ -1,0 +1,26 @@
+# Personal exclusion list — TEMPLATE.
+#
+# Copy to security/exclusions.local.txt and fill in. That file is gitignored and
+# supplied to CI as a secret, because a list of things you want suppressed is itself
+# a tidy summary of the things you want suppressed.
+#
+# One term per line. Matching is case-insensitive, on word boundaries.
+# A match fails the build. There is no override: rewrite the sentence instead.
+
+# --- Current and recent employers you do not want named ---
+# Example Corp
+
+# --- Clearances, programs, contract vehicles ---
+# Top Secret
+
+# --- Military unit and base assignments ---
+# 1st Example Battalion
+
+# --- Home town, street, school ---
+# Anytown, Ohio
+
+# --- Family names ---
+# Firstname
+
+# --- Private hostnames and service names ---
+# my-private-service
