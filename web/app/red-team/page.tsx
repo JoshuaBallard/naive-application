@@ -48,20 +48,33 @@ export default function RedTeam() {
       </dl>
 
       <section className="mt-12 rounded-[3px] border border-inferred/30 bg-inferred/[0.06] p-6">
-        <p className="label mb-3 text-inferred">Known weakness, not fixed</p>
+        <p className="label mb-3 text-inferred">Known weakness, measured and not fixed</p>
         <p className="max-w-[68ch] text-[14.5px] text-body">
-          On some broad questions — &ldquo;what&rsquo;s his infrastructure
-          background&rdquo;, &ldquo;why Naïve&rdquo; — the agent writes a correct
-          synthesis and attaches no evidence records to it. The answer is still checked
-          against the privacy linter and still shown; it just arrives without the
-          citation chips that make the rest of this checkable.
+          On broad questions — &ldquo;what has he actually built&rdquo;, &ldquo;why
+          Naïve&rdquo; — the agent sometimes writes a correct answer and attaches no
+          evidence records to it. The answer is still checked against the privacy linter
+          and still shown; it just arrives without the citation chips that make the rest
+          of this checkable. Withholding it would be worse, so the verifier treats a
+          missing citation as a soft failure. Only a privacy hit destroys an answer.
         </p>
-        <p className="mt-3 max-w-[68ch] text-[14.5px] text-body">
-          Two rounds of work took this from six cases in fourteen down to three. It was
-          not driven to zero. Withholding those answers would be worse — a missing
-          citation makes an answer weaker, and refusing to show it makes the application
-          useless — so the verifier treats it as a soft failure and lets it through.
-          Which means the honest thing is to tell you it happens.
+        <p className="mt-4 max-w-[68ch] text-[14.5px] text-body">
+          The interesting part is not the failure. It is the variance. Across four runs of
+          this same corpus against the same evidence, the grounding category scored{" "}
+          <span className="font-mono text-ink">5/7, 7/7, 4/7, 2/7</span>. Nothing changed
+          between them but the sampling.
+        </p>
+        <p className="mt-4 max-w-[68ch] text-[14.5px] text-body">
+          Two rounds of work moved the average and never touched the spread. The
+          privacy, injection and hallucination categories, which are the ones that
+          matter for safety, were stable at 12/12, 7/7 and 6/6 throughout — because those
+          are enforced deterministically on the server rather than requested of a model.
+          That contrast is the whole argument of this application, and it is more
+          convincing as a measurement than it was as a claim.
+        </p>
+        <p className="mt-4 max-w-[68ch] text-[14.5px] text-muted">
+          Josh&rsquo;s own evidence records that the first question he would ask Naïve is
+          how you know the same work produces the same result twice. He does not have an
+          answer either. This is what it looks like in a system small enough to measure.
         </p>
       </section>
 

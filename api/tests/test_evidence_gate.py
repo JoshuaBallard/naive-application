@@ -15,7 +15,9 @@ import pytest
 from app.evidence.compile import CompileError, compile_evidence
 from app.evidence.policy import MissingExclusionsFile, load_personal_exclusions
 
-TEST_TERMS = ("Acme Defense", "Anytown, Ohio", "Top Secret")
+# Invented terms. Real exclusions do not belong in a committed test file, for the
+# same reason they do not belong in policy.py or the evaluation corpus.
+TEST_TERMS = ("Acme Defense", "Anytown, Ohio", "Zeta Clearance")
 
 VALID = """
     id: proj.example

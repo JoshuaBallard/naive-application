@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api, ApiError } from "@/lib/api";
 import type { AskResult } from "@/lib/types";
@@ -122,6 +123,23 @@ export function Conversation({ budget }: { budget: number }) {
         ))}
       </ol>
       <div ref={endRef} />
+
+      {turns.length >= 2 && (
+        <aside className="mt-12 rounded-[3px] border border-supported/30 bg-supported/[0.05] p-6">
+          <p className="label mb-3 text-supported">The conclusion this was built to reach</p>
+          <p className="mb-4 max-w-[62ch] text-[15px] text-body">
+            If you have got this far and it still seems worth thirty minutes, there is a
+            page for that. It records a request for Josh to confirm by hand — no calendar
+            is touched, no invitation is created, and nobody is committed to anything.
+          </p>
+          <Link
+            href="/talk"
+            className="inline-block rounded-[3px] border border-supported/40 px-4 py-2 text-[14px] text-supported no-underline transition-colors hover:bg-supported/10"
+          >
+            I think you two should talk →
+          </Link>
+        </aside>
+      )}
 
       {blocked ? (
         <p className="mt-8 rounded-[3px] border border-gap/25 bg-gap/10 px-4 py-3 text-[14px] text-gap">

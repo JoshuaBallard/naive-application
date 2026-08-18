@@ -30,3 +30,7 @@ out/
 
 # The personal exclusion list is as sensitive as the facts it excludes.
 security/exclusions.local.txt
+
+# Raw evaluation output. The published, redacted copy lives in web/data/ — one
+# published artifact rather than two that can disagree.
+evaluations/results/
