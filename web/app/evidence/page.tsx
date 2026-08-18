@@ -1,8 +1,9 @@
-import { server } from "@/lib/server";
+import { server, ApiUnavailable } from "@/lib/server";
+import { Offline } from "@/components/offline";
 import { StatusChip } from "@/components/status";
 import type { EvidenceRecord } from "@/lib/types";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export const metadata = { title: "The whole world model" };
 
@@ -19,7 +20,7 @@ const ORDER: [string, string][] = [
   ["availability", "Availability"],
 ];
 
-export default async function Evidence() {
+async function EvidenceBody() {
   const { records, count, build, built_at } = await server.evidence();
   const byType = new Map<string, EvidenceRecord[]>();
   for (const record of records) {
@@ -160,4 +161,14 @@ function Record({ record }: { record: EvidenceRecord }) {
       )}
     </li>
   );
+}
+
+
+export default async function Evidence() {
+  try {
+    return await EvidenceBody();
+  } catch (error) {
+    if (error instanceof ApiUnavailable) return <Offline what="evidence" />;
+    throw error;
+  }
 }

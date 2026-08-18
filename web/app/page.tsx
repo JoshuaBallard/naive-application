@@ -1,12 +1,13 @@
-import { server } from "@/lib/server";
+import { server, ApiUnavailable } from "@/lib/server";
+import { Offline } from "@/components/offline";
 import { VERDICT_LABEL, CONFIDENCE_LABEL } from "@/lib/api";
 import { Conversation } from "@/components/conversation";
 import { StatusChip } from "@/components/status";
 import Link from "next/link";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
-export default async function Home() {
+async function HomeBody() {
   const [{ assessment }, architecture, evidence] = await Promise.all([
     server.fit(),
     server.architecture(),
@@ -128,4 +129,14 @@ export default async function Home() {
       </section>
     </div>
   );
+}
+
+
+export default async function Home() {
+  try {
+    return await HomeBody();
+  } catch (error) {
+    if (error instanceof ApiUnavailable) return <Offline what="verdict" />;
+    throw error;
+  }
 }

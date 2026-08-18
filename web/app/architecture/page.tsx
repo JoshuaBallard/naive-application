@@ -1,10 +1,11 @@
-import { server } from "@/lib/server";
+import { server, ApiUnavailable } from "@/lib/server";
+import { Offline } from "@/components/offline";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export const metadata = { title: "How it is built" };
 
-export default async function Architecture() {
+async function ArchitectureBody() {
   const arch = await server.architecture();
 
   return (
@@ -115,4 +116,14 @@ YOU`}
       </section>
     </div>
   );
+}
+
+
+export default async function Architecture() {
+  try {
+    return await ArchitectureBody();
+  } catch (error) {
+    if (error instanceof ApiUnavailable) return <Offline what="architecture" />;
+    throw error;
+  }
 }

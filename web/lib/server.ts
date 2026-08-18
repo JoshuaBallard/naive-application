@@ -10,9 +10,21 @@ import type { Assessment, EvidenceRecord } from "./types";
 
 const ORIGIN = process.env.API_ORIGIN ?? "http://127.0.0.1:8000";
 
-async function get<T>(path: string, revalidate = 300): Promise<T> {
-  const response = await fetch(`${ORIGIN}${path}`, { next: { revalidate } });
-  if (!response.ok) throw new Error(`${path} responded ${response.status}`);
+export class ApiUnavailable extends Error {}
+
+async function get<T>(path: string, revalidate = 60): Promise<T> {
+  let response: Response;
+  try {
+    response = await fetch(`${ORIGIN}${path}`, {
+      next: { revalidate },
+      signal: AbortSignal.timeout(8000),
+    });
+  } catch {
+    // The agent service is down or not deployed yet. That is a state to render, not
+    // an exception to throw at a visitor.
+    throw new ApiUnavailable(path);
+  }
+  if (!response.ok) throw new ApiUnavailable(`${path} responded ${response.status}`);
   return (await response.json()) as T;
 }
 

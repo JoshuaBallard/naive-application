@@ -1,11 +1,12 @@
-import { server } from "@/lib/server";
+import { server, ApiUnavailable } from "@/lib/server";
+import { Offline } from "@/components/offline";
 import { InterviewForm } from "@/components/interview-form";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export const metadata = { title: "Ask for the thirty minutes" };
 
-export default async function Talk() {
+async function TalkBody() {
   const { records } = await server.availability();
   const record = records[0];
   const windows = (record?.windows ?? []) as { id: string; label: string; timezone: string }[];
@@ -32,4 +33,14 @@ export default async function Talk() {
       <InterviewForm windows={windows} />
     </div>
   );
+}
+
+
+export default async function Talk() {
+  try {
+    return await TalkBody();
+  } catch (error) {
+    if (error instanceof ApiUnavailable) return <Offline what="availability" />;
+    throw error;
+  }
 }

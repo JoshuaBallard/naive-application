@@ -1,9 +1,10 @@
-import { server } from "@/lib/server";
+import { server, ApiUnavailable } from "@/lib/server";
+import { Offline } from "@/components/offline";
 import { VERDICT_LABEL, CONFIDENCE_LABEL } from "@/lib/api";
 import { StatusChip, Cite } from "@/components/status";
 import type { EvidenceRecord } from "@/lib/types";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export const metadata = { title: "Fit, requirement by requirement" };
 
@@ -13,7 +14,7 @@ const GROUPS = [
   { key: "practical", label: "Practical constraints", note: "Reported separately. Never folded into the score." },
 ] as const;
 
-export default async function Fit() {
+async function FitBody() {
   const { assessment, requirements, gaps } = await server.fit();
 
   return (
@@ -121,4 +122,14 @@ function RequirementRow({ row }: { row: EvidenceRecord }) {
       )}
     </li>
   );
+}
+
+
+export default async function Fit() {
+  try {
+    return await FitBody();
+  } catch (error) {
+    if (error instanceof ApiUnavailable) return <Offline what="rubric" />;
+    throw error;
+  }
 }
