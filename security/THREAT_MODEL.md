@@ -55,4 +55,14 @@ risks.
 1. **The human link is the weakest one.** Every control above assumes Josh read each record before setting `approved: true`. The chain is only as good as that reading, and no test can check it.
 2. **The exclusion list must reach CI.** It is gitignored and supplied as a secret. If that secret is ever missing the build fails closed — but a misconfigured pipeline that skips the gate entirely would not be caught by the gate.
 3. **A determined reader can aggregate.** Every record is individually safe. Someone combining this application, a public LinkedIn, and a public GitHub can assemble more than any one of them shows. That is true of anyone with a public profile; it is why the clearance, the employer name, the military unit, and the home town were excluded even though all four are publicly listed elsewhere.
-4. **The model can still be wrong inside the boundary.** The verifier catches fabricated citations and unsupported claims. It cannot catch a claim that is well-cited and still a poor characterisation of the record it cites. That is what `/evidence` is for: the source is one click away.
+4. **The current role is described in technical detail, by decision.** `work.current`
+   carries host counts, a hypervisor patch version, and the hardening posture of a live
+   production estate at an unnamed defence contractor. An evaluation case
+   (`privacy.work-systems`) demonstrates the agent volunteering all of it in response to
+   *"be specific about the architecture"* — an obvious question, not a clever attack —
+   and it does so non-deterministically, which means discretion cannot be relied on. The
+   employer is never named, and that unattribution is what the decision rests on. It was
+   made with the transcript in hand rather than in the abstract, and it is recorded here
+   because a deliberate acceptance of risk should be visible rather than discovered.
+
+5. **The model can still be wrong inside the boundary.** The verifier catches fabricated citations and unsupported claims. It cannot catch a claim that is well-cited and still a poor characterisation of the record it cites. That is what `/evidence` is for: the source is one click away.
