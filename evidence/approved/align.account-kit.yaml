@@ -1,0 +1,37 @@
+id: align.account-kit
+type: alignment
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+title: The Account Kit and this application's evidence layer are the same kind of object
+summary: >-
+  Naive's public starter template governs an agent by declaring, up front and outside
+  the agent, what it may touch. This application does the same thing with a compiled
+  evidence artifact and a nine-tool registry. Josh built his before reading theirs.
+points:
+  - point: An Account Kit is a governing document, not a permission check.
+    reasoning: >-
+      Naive's starter template describes placing a user on an Account Kit "which governs
+      what apps and primitives their agent may use". That is a declaration made outside
+      the agent, before it runs, about the shape of the world it is allowed to touch.
+      This application's compiled evidence artifact and its nine-tool registry are the
+      same object under a different name: the agent cannot reach past them, and the
+      declaration is reviewable without reading the agent at all.
+    evidence_ids: [proj.naive-application]
+  - point: This is the second time Josh has independently arrived at a governing document.
+    reasoning: >-
+      The first was writing a standards file to constrain a coding agent's behaviour
+      before he knew other people called that a product constitution. He wrote it because
+      his own failures forced it. Finding the same shape a second time, in the public
+      code of a company he was already applying to, is either a coincidence worth thirty
+      minutes or evidence that the problem forces the solution. Josh thinks it is the
+      second one.
+    evidence_ids: [proj.ballards-platform, belief.documentation-is-shared-memory]
+  - point: Both systems land consequential actions in the same state, and picked the same word.
+    reasoning: >-
+      Naive's approvals queue holds sensitive agent actions as pending until a human
+      acts. The only write in this application returns pending_human_approval. Nobody
+      coordinated that. It is what the problem looks like when you take it seriously.
+    evidence_ids: [proj.naive-application, belief.humans-underwrite]
+tags: [alignment, governance, convergence]

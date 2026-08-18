@@ -1,0 +1,21 @@
+id: req.product-taste
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Strong product instincts and taste
+summary: The evidence is mostly things Josh decided not to ship.
+requirement: Strong product instincts and taste
+category: must_have
+status: SUPPORTED
+reasoning: >-
+  Taste shows up as subtraction. Josh cut a product proposal he had already written
+  because an hour with a product was not enough to earn the opinion. He refused to put
+  React on a one-day static site because it would have been a costume. He kept planning
+  documents that the finished work contradicts, and wrote a file explaining the gap
+  rather than deleting them. In this application he pushed the practical constraint that
+  most weakens his case to the top of the page instead of burying it. None of that
+  requires trusting his self-assessment; the artifacts are public.
+evidence_ids: [proj.built-in-a-day, proj.naive-application]
+tags: [requirement, must-have, product]

@@ -1,0 +1,18 @@
+id: req.ex-founder
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Ex-founder or technical co-founder background
+summary: Solo products with real users, and a coaching program he ran himself. No company, no co-founder, no funding.
+requirement: Ex-founder or technical co-founder background
+category: nice_to_have
+status: PARTIAL
+reasoning: >-
+  Josh has run a paid coaching practice and shipped three products alone, which is
+  founder-shaped work. He has not founded a company, taken on a co-founder, raised money,
+  hired anyone, or carried a business that had to survive on its own revenue. Calling
+  that a founder background would be stretching it.
+evidence_ids: [proj.dad-mode, proj.quiet-wells, work.etegent]
+tags: [requirement, nice-to-have]

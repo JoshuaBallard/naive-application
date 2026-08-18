@@ -1,0 +1,39 @@
+id: work.usmc
+type: work_history
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+
+title: Cyber Network Operator, US Marine Corps
+summary: >-
+  Four years running networks and accounts in the Marine Corps, supervising twelve
+  Marines and owning their training, before any of the civilian infrastructure work.
+
+organization: US Marine Corps
+role: Cyber Network Operator
+start: 2012-12
+end: 2016-12
+
+scope: >-
+  Ran networks and accounts for a Marine Corps unit. Supervised 12 Marines and owned
+  their training and development. Built and maintained 1,000+ Active Directory
+  accounts, security groups, and group policy. Stood up networks alongside foreign
+  militaries during combined operations, supporting roughly 150 users. Standardized
+  imaging for 300+ machines across 3 locations. Accountable for a controlled-materials
+  inventory of nearly 300 items with zero losses.
+
+technologies:
+  - Active Directory
+  - group policy
+  - Windows
+  - networking
+  - imaging
+
+sensitive_details_removed: true
+redaction_note: >-
+  Unit designation and duty station removed. The controlled-materials role was
+  generalized: the accountability and the result are the signal, the classification
+  vocabulary is not.
+
+tags: [leadership, networking, active-directory, military]

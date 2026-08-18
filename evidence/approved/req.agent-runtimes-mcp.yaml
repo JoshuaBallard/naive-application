@@ -1,0 +1,20 @@
+id: req.agent-runtimes-mcp
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Familiarity with agent runtimes, MCP, or autonomous workflow tooling
+summary: Familiar as a heavy user who wrote the rules his agent works inside. Has not authored the tooling itself.
+requirement: Familiarity with agent runtimes, MCP, or autonomous workflow tooling
+category: nice_to_have
+status: PARTIAL
+reasoning: >-
+  Josh has spent roughly a year using a coding agent daily and wrote the engineering
+  standards, verification rules, and human review boundaries it operates inside, which is
+  the governance layer of an agent runtime rather than the runtime. He has not authored
+  an MCP server, built an orchestration layer, or run agents unattended against anything
+  that mattered. The tool registry in this application is the closest he has come, and it
+  is nine functions over a JSON file.
+evidence_ids: [proj.ballards-platform, proj.naive-application, gap.multi-agent]
+tags: [requirement, nice-to-have, agents]

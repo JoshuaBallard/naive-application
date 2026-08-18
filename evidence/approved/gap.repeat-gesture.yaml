@@ -1,0 +1,30 @@
+id: gap.repeat-gesture
+type: gap
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: This is the second time Josh has built something instead of applying
+summary: >-
+  Twelve days before this application, Josh built and published a similar gesture for a
+  different company. It is public on the same GitHub account, and pretending otherwise
+  would be the one move inconsistent with everything else here.
+gap: >-
+  On 2026-08-05 Josh built "Built in a Day", a twelve-chapter application experience,
+  for Obvious. It is public. This application, for Naive, is the second time in under
+  three weeks that he has built something rather than clicking apply. A reasonable
+  person might read that as a template rather than a response.
+why_it_matters: >-
+  The premise of both artifacts is sincerity. If the gesture is reusable, the sincerity
+  is worth less, and a hiring manager who finds the first one after reading the second
+  is entitled to that reaction.
+honest_mitigation: >-
+  Two things are true. The pattern is real: Josh keeps building things nobody asked for,
+  which is the point rather than the problem. And these are not the same artifact. The
+  first is a narrative site with no backend and no tests. This one is a working system
+  with a hard data boundary, a build gate that fails on leaks, a deterministic verifier,
+  and a published threat model. The research file from the first one also names three
+  things Josh got wrong about that company, which is a strange thing to include in a
+  template.
+evidence_ids: [proj.built-in-a-day, proj.naive-application]
+tags: [gap, honesty, meta]

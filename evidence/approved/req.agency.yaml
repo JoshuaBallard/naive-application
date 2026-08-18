@@ -1,0 +1,20 @@
+id: req.agency
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: High agency
+summary: Naive lists high agency as a must-have. This is the requirement with the most public evidence behind it.
+requirement: High agency
+category: must_have
+status: SUPPORTED
+reasoning: >-
+  On 2026-08-05 Josh opened a repository instead of clicking apply, scoped eight issues
+  before writing code, and shipped 48 commits through 22 pull requests between 11:19 and
+  22:25 the same day. Nobody asked for it. This application is the second instance, in
+  a different stack, under a self-imposed deadline. The pattern is also visible at work:
+  building a company's first IT budget from nothing, and rebuilding a prioritisation
+  system and taking it to executives.
+evidence_ids: [proj.built-in-a-day, proj.naive-application, work.etegent, work.ge-aviation]
+tags: [requirement, must-have]

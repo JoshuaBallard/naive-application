@@ -1,0 +1,23 @@
+id: fail.token-leak
+type: failure
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+title: The agent printed a live credential into the session
+summary: >-
+  While verifying documentation, the AI coding agent printed a live service token into
+  the session. The fix was a system, not an apology.
+what_happened: >-
+  During a documentation verification pass on Ballards Platform, the coding agent
+  printed a live token into the session transcript.
+what_it_taught: >-
+  Security mistakes need systems, not apologies. The interesting failure was not that
+  the agent did something careless; it was that the surrounding process made it possible
+  and had no way to recover.
+fix: >-
+  The credential was rotated, the failure mode was documented, an unnecessary shell
+  export was removed, and a tested rotation script was written so the fix became
+  repeatable rather than heroic.
+evidence_url: https://joshuaballard.github.io/built-in-a-day/
+tags: [failure, security, agents]

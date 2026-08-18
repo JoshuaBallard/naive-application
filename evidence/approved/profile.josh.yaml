@@ -1,0 +1,39 @@
+id: profile.josh
+type: profile
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+
+title: Josh Ballard
+summary: >-
+  Thirteen years in infrastructure and operations, four in the Marine Corps and nine
+  in enterprise environments, with four of those years spent as a technical product
+  manager for the tooling engineers actually used. Currently a principal systems
+  administrator. Spends nights and weekends building AI products and figuring out how
+  humans and agents work together without either one getting the final word.
+
+headline: >-
+  Infrastructure engineer and former technical product manager, now building with AI
+  agents and thinking hard about where the human approval boundary belongs.
+
+location: Greater Cincinnati, Ohio, United States (US Eastern)
+
+current_status: >-
+  Employed full time as a principal systems administrator at a defense contractor.
+  Not urgently looking. Interested in this role specifically.
+
+focus:
+  - Agent systems that produce evidence a human can check
+  - Where autonomy stops and human approval starts
+  - Infrastructure and operations for things that have to keep running
+  - Developer-facing tooling and internal platforms
+
+sensitive_details_removed: true
+redaction_note: >-
+  Home town reduced to metro level. Current employer described rather than named,
+  because Josh is employed and not broadcasting a search. One government credential
+  listed on his public profile was excluded by decision: it does no work for this role
+  and it lapses in September 2026.
+
+tags: [profile, infrastructure, product]

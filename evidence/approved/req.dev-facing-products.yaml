@@ -1,0 +1,20 @@
+id: req.dev-facing-products
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Experience shipping developer-facing or AI-native products
+summary: Four years of developer-facing product work, and two AI-native products that are live.
+requirement: Experience shipping developer-facing or AI-native products
+category: nice_to_have
+status: SUPPORTED
+reasoning: >-
+  Both halves are covered. Developer-facing: four years at GE Aviation owning the product
+  side of the tooling engineers used, including rebuilding how that work was prioritised
+  and presenting it to executives. AI-native: Quiet Wells is live and Dad Mode ran with a
+  real cohort, both designed around what the model could and could not be relied on to
+  do. The scale is small and the AI-native pair were built on a no-code platform, which
+  the project records state plainly.
+evidence_ids: [work.ge-aviation, proj.quiet-wells, proj.dad-mode]
+tags: [requirement, nice-to-have, product]

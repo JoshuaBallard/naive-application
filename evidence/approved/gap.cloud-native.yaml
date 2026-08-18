@@ -1,0 +1,26 @@
+id: gap.cloud-native
+type: gap
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: On-premises infrastructure, not cloud-native
+summary: >-
+  A decade of serious infrastructure work, effectively all of it on premises. No AWS,
+  GCP, or Kubernetes at professional scale, and no service with external users.
+gap: >-
+  Josh's infrastructure experience is virtualization, storage, Linux, Windows, and
+  security operations, on premises. He has not run production workloads on a public
+  cloud, has not operated Kubernetes at scale, and has never been responsible for a
+  service with external customers, an availability target, or an on-call rotation.
+why_it_matters: >-
+  An AI startup's infrastructure problems are elastic compute, inference cost, queueing,
+  and the failure modes of things that scale sideways. Those are different problems from
+  the ones Josh has solved, even though both are called infrastructure.
+honest_mitigation: >-
+  What transfers is the discipline rather than the platform: running a production
+  environment other people depend on, hardening every component individually,
+  vulnerability remediation, and completing a hypervisor migration without losing data.
+  Whether that transfers fast enough is a fair thing to probe in a conversation.
+evidence_ids: [work.current, work.ge-aviation, work.northrop]
+tags: [gap, infrastructure, cloud]

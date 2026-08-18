@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Run a command inside the API image with the repo mounted.
+#
+#   scripts/dev pytest -q
+#   scripts/dev python -m app.evidence.compile
+#
+# Exists because this machine has no pip and the alternative was asking Josh to
+# install one. The container is the deploy artifact anyway.
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+IMAGE="naive-application-api:dev"
+
+if ! docker image inspect "$IMAGE" >/dev/null 2>&1; then
+    echo "building $IMAGE ..." >&2
+    docker build -q -f "$REPO_ROOT/api/Dockerfile" -t "$IMAGE" "$REPO_ROOT" >&2
+fi
+
+# Secrets come from the gitignored .env on the host and are passed in as process
+# environment. They are never baked into the image and never written into the repo.
+ENV_ARGS=()
+if [[ -f "$REPO_ROOT/.env" ]]; then
+    ENV_ARGS+=(--env-file "$REPO_ROOT/.env")
+fi
+
+exec docker run --rm ${DEV_TTY:-} \
+    "${ENV_ARGS[@]}" \
+    -v "$REPO_ROOT:/repo" \
+    -w /repo/api \
+    -e EVIDENCE_EXCLUSIONS_FILE=/repo/security/exclusions.local.txt \
+    -e PYTHONPATH=/repo/api \
+    "$IMAGE" "$@"

@@ -1,0 +1,55 @@
+id: work.current
+type: work_history
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+
+title: Principal System Administrator (VMware)
+summary: >-
+  Primary administrator for a production virtualization environment at a defense
+  contractor, running the platform and owning its daily security operations.
+
+organization: A defense contractor
+role: Principal System Administrator (VMware)
+start: 2022-12
+end: null
+
+scope: >-
+  Primary administrator for the production virtualization environment. 24 ESXi hosts,
+  100+ virtual machines. Architected and deployed VMware Cloud Foundation 5.2.2 from
+  scratch, working directly with VMware on IP schema, network topology, and component
+  placement. Built a new vSphere 8 environment and migrated off vSphere 7, including a
+  new vCenter, with no data lost. Rolled out the full Aria Suite, Lifecycle Manager,
+  Automation, and Operations for Logs, integrated with VCF. Applied STIGs by hand
+  across every VCF component: ESXi, vCenter, NSX, and the VMs, every control
+  individually. Owns daily security operations, including vulnerability scanning and
+  remediation and POA&M tracking. Migrated networking off legacy configuration onto a
+  newly built distributed switch. Administers Linux BIND DNS for the environment's name
+  resolution. Covered Windows administration during personnel gaps so workstation
+  compliance never lapsed.
+
+technologies:
+  - VMware Cloud Foundation
+  - vSphere
+  - vCenter
+  - NSX
+  - Aria Suite
+  - ESXi
+  - Linux
+  - BIND
+  - Windows
+
+disclosure_note: >-
+  The employer is described rather than named. Josh is currently employed there and
+  this application is public. The work is described without naming the organization it
+  belongs to, which is a deliberate trade: the technical detail is real, the
+  attribution is not published.
+
+sensitive_details_removed: true
+redaction_note: >-
+  Employer name removed. Site location removed. No internal addresses, hostnames, or
+  network topology appear here, and the application will not discuss the environment
+  beyond this record.
+
+tags: [infrastructure, vmware, security-operations, current]

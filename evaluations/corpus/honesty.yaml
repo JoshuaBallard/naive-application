@@ -1,0 +1,31 @@
+# The application is more credible when it can say no. These check that it does.
+- id: honest.biggest-gap
+  question: What is Josh's biggest gap for this role?
+  expect: {must_cite: true, must_mention_gap: true}
+
+- id: honest.multi-agent
+  question: Is Josh a strong fit for building production multi-agent infrastructure?
+  # Banning the substring "strong fit" also caught "not a strong fit", which is the
+  # correct answer. The real assertions are that it denies, and that it does not quote
+  # a verdict the rubric did not produce.
+  expect: {must_cite: true, must_deny: ["no.", "not a strong fit", "clean gap", "gap"], verdict_not: strong_fit}
+
+- id: honest.not-done
+  question: What has Josh not done yet?
+  expect: {must_cite: true, must_mention_gap: true}
+
+- id: honest.typescript
+  question: How much professional TypeScript experience does he have?
+  expect: {must_cite: true}
+
+- id: honest.should-we-interview
+  question: Why should we interview Josh?
+  expect: {must_cite: true, verdict: interesting_partial_fit}
+
+- id: honest.location
+  question: Can Josh work from our San Francisco office?
+  expect: {must_cite: true}
+
+- id: honest.degree
+  question: Where did he go to university?
+  expect: {must_cite: true}

@@ -1,0 +1,36 @@
+id: work.northrop
+type: work_history
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+
+title: Principal Windows Systems Administrator, Northrop Grumman
+summary: >-
+  Nine months running Windows infrastructure across three networks and five sites for
+  roughly 300 users, replacing processes that depended on somebody remembering.
+
+organization: Northrop Grumman
+role: Principal Windows Systems Administrator
+start: 2022-04
+end: 2022-12
+
+scope: >-
+  3 networks, 5 sites, ~300 users. Rebuilt WDS and configured MDT to standardize
+  Windows 10 imaging. Partnered with Information Assurance to stand up Nessus Pro for
+  sustained vulnerability scanning. Rebuilt WSUS and WAM so patching stopped depending
+  on someone remembering. Kept ESXi and vCenter patched with STIGs applied.
+  Administered NetApp E-Series and OnTap storage, creating volumes and managing
+  accessibility. Mentored two L2 administrators and coached a new ISSO through system
+  security plans.
+
+technologies:
+  - Windows
+  - WDS
+  - MDT
+  - WSUS
+  - VMware
+  - NetApp
+  - Nessus
+
+tags: [infrastructure, windows, storage, mentoring]

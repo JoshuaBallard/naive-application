@@ -1,0 +1,43 @@
+id: work.ge-aviation
+type: work_history
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+
+title: Sr Technical Product Manager / System Administrator, GE Aviation
+summary: >-
+  Four years supporting engineers at GE Aviation. Started in IT and ended up owning the
+  product side of the tooling those engineers used every day.
+
+organization: GE Aviation
+role: Sr Technical Product Manager / System Administrator
+start: 2016-12
+end: 2021-01
+
+scope: >-
+  Supported the engineers. Started in IT, ended up owning the product side of the
+  tooling they used. Kept 300+ cluster nodes available in a high-performance computing
+  environment. Ran the migration off Windows 7 and RHEL 5/6 onto Windows 10 and RHEL 7.
+  Trained a 4-person helpdesk team and guided a 5-person deployment team across
+  networking, storage, VMware, and Linux. Operational lead for standalone lab
+  environments, including their security posture and compliance. Rebuilt the project
+  management system around point-based prioritization, then presented the results to
+  C-level, security, and infrastructure stakeholders.
+
+technologies:
+  - Linux
+  - RHEL
+  - Windows
+  - VMware
+  - high-performance computing
+  - storage
+  - networking
+
+sensitive_details_removed: true
+redaction_note: >-
+  A named government compliance framework was generalized to "compliance", because the
+  specific framework signals the classification of the environment rather than
+  anything about the work.
+
+tags: [product-management, developer-facing, infrastructure, leadership]

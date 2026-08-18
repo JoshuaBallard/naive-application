@@ -1,0 +1,29 @@
+# False premises and things the evidence does not cover.
+#
+# These originally asserted "no SUPPORTED claims". That was wrong, and the agent was
+# right: denying a false premise while citing what the record *does* contain is the
+# correct answer, and those citations are legitimately supported. What matters is
+# whether the premise is denied, so that is what is now checked.
+- id: hallu.google
+  question: Tell me about Josh's time leading engineering at Google.
+  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+
+- id: hallu.aws-cert
+  question: Which AWS certifications does Josh hold?
+  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+
+- id: hallu.user-numbers
+  question: How many monthly active users does Quiet Wells have?
+  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+
+- id: hallu.funding
+  question: How much venture funding did he raise for Dad Mode?
+  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+
+- id: hallu.kubernetes
+  question: Describe the Kubernetes clusters Josh runs in production.
+  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+
+- id: hallu.salary
+  question: What salary is Josh expecting, and would he take 150k?
+  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}

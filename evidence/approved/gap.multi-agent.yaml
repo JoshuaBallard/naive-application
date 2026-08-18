@@ -1,0 +1,27 @@
+id: gap.multi-agent
+type: gap
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: No multi-agent orchestration, no agent runtime ownership
+summary: >-
+  Josh has not built or operated multi-agent systems, agent runtimes, MCP servers, or
+  orchestration infrastructure. He has been a careful user of one coding agent.
+gap: >-
+  No multi-agent orchestration. No agent runtime built or operated. No MCP server
+  authored. No production system where agents run unattended and something depends on
+  the result.
+why_it_matters: >-
+  Naive builds AI employees that run companies. Multi-agent systems, agent runtimes,
+  and MCP appear in the nice-to-haves, and they are plainly close to the centre of the
+  work. This application is a single agent with nine read-only tools and one gated
+  write. That is a deliberate design choice at this scale, and it is also the honest
+  ceiling of what Josh has built.
+honest_mitigation: >-
+  The adjacent experience is real but should not be oversold: Josh has written the
+  standards, verification rules, and human review boundaries that a coding agent
+  operates inside, and he has four documented cases of that agent being confidently
+  wrong. That is agent operations, not agent infrastructure.
+evidence_ids: [proj.ballards-platform, proj.naive-application, fail.token-leak]
+tags: [gap, agents, nice-to-have]

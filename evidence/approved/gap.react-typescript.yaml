@@ -1,0 +1,26 @@
+id: gap.react-typescript
+type: gap
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: No professional React or TypeScript
+summary: >-
+  Josh has never shipped production React or TypeScript inside a professional
+  engineering team, and Naive names both as must-haves.
+gap: >-
+  No production React or TypeScript inside a professional engineering team. No frontend
+  code reviewed daily by senior engineers at the bar an AI startup hires for.
+why_it_matters: >-
+  Naive lists "strong full-stack engineering (Next.js, TypeScript, Python)" as a
+  must-have. This is the most direct mismatch between the posting and the record, and
+  it is not close.
+honest_mitigation: >-
+  This application is written in TypeScript and Next.js on the frontend and Python on
+  the backend, deliberately, because that is the stack in the posting. It is evidence
+  that Josh can learn it and build something real in it quickly. It is not evidence of
+  tenure, and it should not be read as any. Twelve days earlier he refused to put React
+  on a one-day static site because it would have been a costume; the difference here is
+  that the stack is doing actual work.
+evidence_ids: [proj.built-in-a-day, proj.naive-application]
+tags: [gap, frontend, must-have]

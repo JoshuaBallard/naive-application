@@ -1,0 +1,20 @@
+id: req.context-switching
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Switching between writing code and making product calls in the same day
+summary: The clearest example is a product decision that removed a feature Josh had already built.
+requirement: Ability to context-switch between writing code and making product calls in the same day
+category: must_have
+status: SUPPORTED
+reasoning: >-
+  On the Built in a Day build, Josh wrote a product-proposal chapter, then cut it the
+  same evening on the grounds that an hour inside a company's product was enough to have
+  an opinion but not enough to be worth their time. He shipped six more pull requests
+  after making that call. On Dad Mode, cohort feedback that the AI coach was too harsh
+  was fixed by rewriting the coach's operating instructions rather than building a
+  feature. Both are product decisions made mid-build, not after it.
+evidence_ids: [proj.built-in-a-day, proj.dad-mode]
+tags: [requirement, must-have, product]

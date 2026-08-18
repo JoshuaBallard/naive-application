@@ -1,0 +1,54 @@
+id: proj.ballards-platform
+type: project
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+
+title: Ballards Platform
+summary: >-
+  A private family platform that started as a Minecraft server and turned into the
+  place Josh learned to build and operate software with an AI agent as a real
+  collaborator, including the standards and review boundaries that agent works inside.
+
+problem: >-
+  Josh wanted a private Minecraft server for his family. That lasted about a week
+  before the interesting problem became how a human and an AI coding agent could build
+  and operate real software together without either one getting the final word.
+
+what_josh_built: >-
+  Docker services, a Flask API, a custom Paper plugin that saves locations from inside
+  the game, a searchable World Atlas for managing those locations, GitHub workflows,
+  operational scripts, documentation, secure remote access, and a written set of
+  engineering standards, verification rules, and human review boundaries that the AI
+  coding agent works inside. Minecraft became the excuse. The engineering system became
+  the project.
+
+what_josh_learned: >-
+  Documentation is not overhead, it is shared memory. An agent is only as consistent as
+  the context and standards it is given, so the standards became part of the product
+  rather than something to write afterwards. The four failures in this system, recorded
+  separately, are what forced that conclusion.
+
+technologies: [Docker, Flask, SQLite, Python, Java, GitHub Actions, Claude Code]
+
+known_limitations:
+  - >-
+      Private. It runs at home, is not exposed to the internet, and the repository is
+      not public. Nothing about it can be independently verified, which is why this
+      record is marked self-authored.
+  - >-
+      Family scale. A handful of users, no load testing, no availability target, no
+      on-call. It is a serious hobby system, not production.
+  - >-
+      This application has no access to it. No telemetry, no data, no logs, no
+      configuration. It can describe the architecture at the level written here and
+      nothing beyond it.
+
+sensitive_details_removed: true
+redaction_note: >-
+  Host names, network topology, remote-access mechanism, service inventory, family
+  details, and any usage data are all excluded. What remains is the same level of
+  detail already published on the Built in a Day site.
+
+tags: [ai-collaboration, infrastructure, docker, standards, private]

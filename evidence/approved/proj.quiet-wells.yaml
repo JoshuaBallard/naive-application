@@ -1,0 +1,47 @@
+id: proj.quiet-wells
+type: project
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+
+title: Quiet Wells
+summary: >-
+  A live product for capturing handwritten sermon notes, connecting ideas across time,
+  and making space to reflect on them rather than just storing them.
+
+problem: >-
+  The ideas that changed Josh most each week disappeared into notebooks he never opened
+  again. Capture was not the problem. Nothing brought an idea back at the moment it
+  would have mattered.
+
+what_josh_built: >-
+  A product that ingests handwritten notes, recovers meaning from them, links ideas
+  across time, and prompts reflection instead of filing. Built with Lovable, Gemini,
+  and ElevenLabs. It has been live and in use since September 2025.
+
+what_josh_learned: >-
+  Context beats perfect transcription. Handwriting is messy and per-word accuracy was
+  never going to be solved. Using surrounding context to recover meaning turned an
+  unreliable OCR problem into a usable product. That lesson is the same one that shows
+  up later in his agent work: the model is rarely the constraint, the context is.
+
+technologies: [Lovable, Gemini, ElevenLabs]
+public_url: https://quietwells.com
+
+verified_claims:
+  - claim: The product is live and reachable on the public internet.
+    verification: public_artifact
+    evidence_url: https://quietwells.com
+  - claim: In personal use since September 2025.
+    verification: self_reported
+
+known_limitations:
+  - >-
+      Built on a no-code platform with a hosted model. Josh designed the product and
+      the prompting; he did not build the runtime, the infrastructure, or the data
+      layer underneath it.
+  - Small personal user base. No scale, load, or reliability evidence.
+  - No public repository. The product is checkable; the code is not.
+
+tags: [ai-product, 0-to-1, context-engineering, shipped]
