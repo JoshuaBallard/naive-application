@@ -1,0 +1,19 @@
+id: req.launch-ownership
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Own product launches end to end, from spec to build to go-to-market
+summary: Spec-to-build is well evidenced. Go-to-market is not evidenced at all.
+requirement: Own product launches end-to-end - from spec to build to GTM
+category: must_have
+status: PARTIAL
+reasoning: >-
+  Spec to build to shipped is supported three times over, solo: Quiet Wells, Dad Mode,
+  and this application, each scoped, built, and put in front of real people. Go-to-market
+  is the missing third. Josh has never run positioning, pricing, launch, or acquisition
+  for a product with a revenue target, and the honest description of how his products
+  found users is that he handed them to people he already knew.
+evidence_ids: [proj.quiet-wells, proj.dad-mode, proj.naive-application]
+tags: [requirement, must-have, product]

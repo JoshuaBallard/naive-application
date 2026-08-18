@@ -1,0 +1,22 @@
+id: belief.documentation-is-shared-memory
+type: belief
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+title: Documentation is shared memory, not overhead
+summary: >-
+  Josh stopped treating documentation as something written after the work, and started
+  treating it as the memory a human and an agent share.
+belief: >-
+  Documentation is not a record of the work. It is the shared memory that a human and an
+  agent both operate from, which makes it part of the product rather than a byproduct of
+  it.
+reasoning: >-
+  An agent is only as consistent as the context and standards it is given. When the
+  agent produced something wrong on Ballards Platform, the durable fix was almost never
+  a correction in the moment; it was a change to what the agent read before it started.
+  Josh arrived at this independently and later found the same instinct described as
+  context engineering, which was the point at which he believed it.
+origin_ids: [proj.ballards-platform, proj.built-in-a-day]
+tags: [belief, agents, context]

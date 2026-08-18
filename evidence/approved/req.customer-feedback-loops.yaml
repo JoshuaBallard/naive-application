@@ -1,0 +1,20 @@
+id: req.customer-feedback-loops
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Talk to customers constantly and turn feedback into product decisions
+summary: One clean example with six users, and a decade of internal-user work that is adjacent but not the same.
+requirement: Talk to customers constantly and translate product analytics and feedback loops into product decisions
+category: must_have
+status: PARTIAL
+reasoning: >-
+  The Dad Mode example is exactly the right shape and the wrong size: six users said the
+  AI coach was too harsh, and Josh changed the coach's operating instructions rather than
+  arguing or shipping a feature. At GE Aviation his users were the engineers he supported
+  for four years, which is real feedback-driven product work on internal tooling. Neither
+  is constant contact with paying external customers, and there is no evidence of working
+  from product analytics at any volume.
+evidence_ids: [proj.dad-mode, work.ge-aviation]
+tags: [requirement, must-have, product]

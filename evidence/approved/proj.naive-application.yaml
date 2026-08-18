@@ -1,0 +1,81 @@
+id: proj.naive-application
+type: project
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+
+title: This application
+summary: >-
+  The system you are currently talking to. An application agent with one job, nine
+  narrow tools, a hard boundary between it and everything private, and a build gate
+  that fails rather than warns.
+
+problem: >-
+  Naive builds AI employees that run companies. The obvious question about that idea is
+  the one every company will eventually have to answer: what may an agent do on its own,
+  what must a human approve, and how does anyone check afterwards? Josh wanted to answer
+  that in software rather than in a cover letter, on a problem small enough to actually
+  finish.
+
+what_josh_built: >-
+  A single agent whose objective is to decide whether a thirty-minute conversation is
+  warranted, and which is allowed to conclude that it is not. It reads one compiled JSON
+  artifact and nothing else. There is no filesystem tool, no shell, no HTTP fetch, no
+  GitHub access, no database read, and no tool that accepts a path, a URL, or a query.
+  Evidence reaches the artifact only through a build gate with five stages: schema,
+  approval, a privacy linter, cross-reference integrity, and a content hash. The
+  verdict is computed by a deterministic rubric on the server, not chosen by the model.
+  Every answer is forced through a structured schema where each claim carries a support
+  level and the evidence ids behind it, and a server-side verifier rejects any claim
+  marked supported that cannot name a record. If verification fails twice, the answer is
+  discarded rather than shown. The only write in the system records an interview request
+  for Josh to approve by hand.
+
+what_josh_learned: >-
+  That the useful security control was absence, not enforcement. Nothing private is
+  protected by a prompt or a filter here; it is simply not in the process. The first
+  version of the exclusion list was committed to source, which would have published
+  every fact it existed to suppress in one convenient place. A blocklist is exactly as
+  sensitive as the things on it.
+
+technologies:
+  - TypeScript
+  - Next.js
+  - Python
+  - FastAPI
+  - Pydantic
+  - Anthropic API
+  - Docker
+  - pytest
+
+verified_claims:
+  - claim: >-
+      The tool surface is pinned by a snapshot test. Adding a tenth tool requires a diff
+      a human has to approve.
+    verification: self_reported
+  - claim: >-
+      The privacy linter masks what it matched, so a finding never reprints the secret
+      it found. There is a test asserting it.
+    verification: self_reported
+  - claim: >-
+      The build fails closed if the exclusion list is missing. A linter that cannot load
+      its blocklist must not report a clean run.
+    verification: self_reported
+
+known_limitations:
+  - >-
+      Built in about two days. One agent, one model, roughly two dozen evidence records.
+      It is a demonstration of a boundary, not production agent infrastructure, and the
+      difference matters.
+  - >-
+      This is Josh's first substantial TypeScript and Next.js build. The stack was chosen
+      because Naive names it. Read it as evidence of learning speed, not of tenure.
+  - >-
+      The repository is not yet public at the time this record was written. Until it is,
+      every claim above is self-reported and should be treated that way.
+  - >-
+      No load testing, no availability target, no multi-tenancy, and no adversarial
+      review by anyone but Josh and the model he built it with.
+
+tags: [agents, tool-use, structured-outputs, security, self-referential]

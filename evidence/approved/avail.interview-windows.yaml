@@ -1,0 +1,27 @@
+id: avail.interview-windows
+type: availability
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+
+title: Interview availability
+summary: >-
+  Windows Josh has explicitly approved for a first conversation. Nothing here comes
+  from a calendar and nothing here books anything.
+
+windows:
+  - id: thu-midday-et
+    label: Thursday, 10:00 to 15:00
+    timezone: America/New_York
+  - id: fri-midday-et
+    label: Friday, 10:00 to 15:00
+    timezone: America/New_York
+
+booking_note: >-
+  These are static windows Josh wrote down, not calendar availability. This
+  application has no access to his calendar, cannot see events, cannot check whether
+  a slot is free, and cannot send an invitation. Submitting a request records it for
+  Josh to confirm by hand.
+
+tags: [availability, human-approval]

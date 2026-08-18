@@ -1,0 +1,31 @@
+id: link.public
+type: link
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+title: Approved public links
+summary: >-
+  Every URL this application is allowed to hand out. There are no others, and it cannot
+  fetch any of them.
+links:
+  - label: Quiet Wells
+    url: https://quietwells.com
+    what_it_shows: A live product Josh designed and shipped. Open it and it works.
+  - label: Built in a Day
+    url: https://joshuaballard.github.io/built-in-a-day/
+    what_it_shows: >-
+      Twelve chapters built in one day for a different company, including a chapter that
+      names Josh's own gaps and a chapter of four failures.
+  - label: Built in a Day, the repository
+    url: https://github.com/JoshuaBallard/built-in-a-day
+    what_it_shows: >-
+      Issues opened before any code, 22 pull requests, and 48 commits all timestamped on
+      2026-08-05. The claim "built in a day" is checkable in about thirty seconds.
+  - label: GitHub
+    url: https://github.com/JoshuaBallard
+    what_it_shows: Josh's public repositories.
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/jbballard2/
+    what_it_shows: Work history, in the form a stranger can cross-check.
+tags: [links, public]

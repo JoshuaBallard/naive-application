@@ -1,0 +1,71 @@
+id: proj.built-in-a-day
+type: project
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+
+title: Built in a Day
+summary: >-
+  A twelve-chapter application experience built for a different company on
+  2026-08-05, start to finish in one day, with the commit history as the receipt.
+
+problem: >-
+  Josh wanted to apply to an AI company and found the normal application process
+  told them nothing about how he actually works. A resume lists outcomes. It cannot
+  show scoping, sequencing, or what someone does when a plan turns out to be wrong.
+
+what_josh_built: >-
+  A static site, no build step and no runtime dependencies, published to GitHub
+  Pages. Eight issues scoped before any code. Every change shipped on a branch
+  through a pull request. A build log that counts itself from the GitHub API with a
+  static fallback for JavaScript-off. Self-hosted variable-font typography, keyboard
+  navigation, a skip link, and a measured contrast pass. He also kept the planning
+  documents that the finished site contradicts, and wrote a file explaining the gap.
+
+what_josh_learned: >-
+  That the honest version reads better than the polished one. The two strongest
+  chapters, the build receipts and the section naming his own gaps, were both written
+  after re-reading the job posting and noticing the first draft had danced around it.
+
+technologies:
+  - HTML
+  - CSS
+  - vanilla JavaScript
+  - GitHub Actions
+  - GitHub Pages
+  - Claude Code
+
+public_url: https://joshuaballard.github.io/built-in-a-day/
+public_repo: https://github.com/JoshuaBallard/built-in-a-day
+
+verified_claims:
+  - claim: >-
+      48 commits, all timestamped on 2026-08-05 between 11:19 and 22:25 Eastern.
+      "Built in a day" is literally true and anyone can check it.
+    verification: public_artifact
+    evidence_url: https://github.com/JoshuaBallard/built-in-a-day/commits/main
+  - claim: 22 pull requests merged, 8 issues opened before the first line of code.
+    verification: public_artifact
+    evidence_url: https://github.com/JoshuaBallard/built-in-a-day/pulls
+  - claim: >-
+      The research file names three things Josh got wrong about the company after
+      hearing evidence that arrived post-build, rather than quietly correcting them.
+    verification: public_artifact
+    evidence_url: https://github.com/JoshuaBallard/built-in-a-day/blob/main/research/README.md
+
+known_limitations:
+  - >-
+      It is a narrative site, not a working system. No backend, no tests, no
+      authentication, no state. The engineering on display is scoping and delivery
+      discipline, not architecture.
+  - >-
+      It was built for a different company. This application is the second time Josh
+      has built something instead of applying, and that pattern is worth naming
+      rather than hiding. See gap.repeat-gesture.
+  - >-
+      Deliberately no React and no TypeScript. Josh judged that putting a framework
+      on a one-day static page would be a costume. That judgment is defensible and it
+      also means the site is not evidence of frontend framework skill.
+
+tags: [shipping-speed, agency, product-judgment, honesty]

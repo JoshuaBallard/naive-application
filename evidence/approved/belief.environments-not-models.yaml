@@ -1,0 +1,20 @@
+id: belief.environments-not-models
+type: belief
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+title: Build better environments for AI, not better prompts
+summary: >-
+  Josh stopped trying to get better answers out of a model and started building better
+  environments for a model to work inside.
+belief: >-
+  The model is rarely the constraint. The environment around it is: what it can read,
+  what it is allowed to do, what it has to prove, and who checks.
+reasoning: >-
+  This started with handwriting recognition on Quiet Wells, where the fix was not a
+  better transcription model but more surrounding context. It ended up as the design of
+  this application, where the security property does not come from instructing the model
+  carefully. It comes from the model having nothing else to reach.
+origin_ids: [proj.quiet-wells, proj.ballards-platform, proj.naive-application]
+tags: [belief, agents, architecture]

@@ -1,0 +1,25 @@
+id: belief.humans-underwrite
+type: belief
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Owning the outcome and adding material comment are different jobs
+summary: >-
+  Josh used to think human review was where value got added. He now thinks the human's
+  job is to underwrite the outcome, and that needing to add material comment is a signal
+  something upstream is broken.
+belief: >-
+  A human has to own the consequence of what an agent ships. That is not the same as a
+  human improving it line by line. If a reviewer keeps having substantive things to say,
+  the fix belongs upstream, in context and standards, not in the review comment.
+reasoning: >-
+  Josh's own practice optimised for small, individually reviewed pull requests, and he
+  presented that as the good version. Researching how a company operating at much higher
+  volume actually works changed his mind: at scale, the human wait between small units is
+  the largest source of dead time, and treating substantive review feedback as a defect
+  in the upstream system is better adapted than treating it as craftsmanship. He wrote
+  that down as something he got wrong rather than quietly updating his position, and the
+  record is public.
+origin_ids: [proj.built-in-a-day, proj.naive-application]
+tags: [belief, governance, human-in-the-loop]

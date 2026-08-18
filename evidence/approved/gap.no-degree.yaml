@@ -1,0 +1,24 @@
+id: gap.no-degree
+type: gap
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: No computer science degree
+summary: >-
+  Josh has no CS degree and no degree at all. High school, then the Marine Corps, then
+  thirteen years of infrastructure work and a set of certifications.
+gap: >-
+  No formal computer science education. No degree. The path was high school, then the
+  Marine Corps as a cyber network operator, then enterprise infrastructure. Formal
+  training is CompTIA A+ and Security+, ITIL v3 Foundations, and VMware vSphere
+  coursework.
+why_it_matters: >-
+  It is listed because it is the kind of thing that looks like concealment if it turns
+  up later, and because it genuinely shapes the profile: the theory Josh has is the
+  theory the work required, which leaves gaps that a curriculum would have filled.
+honest_mitigation: >-
+  Naive does not ask for a degree. It asks for high agency and taste, both of which are
+  easier to evidence than to credential.
+evidence_ids: [work.usmc, work.current]
+tags: [gap, background]

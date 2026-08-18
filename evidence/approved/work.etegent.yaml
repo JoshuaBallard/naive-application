@@ -1,0 +1,38 @@
+id: work.etegent
+type: work_history
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+
+title: IT Manager, Etegent Technologies
+summary: >-
+  Ran IT for a small engineering company, including building its first ever IT budget
+  from nothing and writing the documentation the team had been operating without.
+
+organization: Etegent Technologies
+role: IT Manager
+start: 2021-02
+end: 2022-04
+
+scope: >-
+  Ran IT for a small engineering company. Built the company's first IT budget, $500K,
+  from nothing. Served as ISSO and System Administrator on an isolated network,
+  maintaining compliance and preparing for accreditation renewal. Replaced the helpdesk
+  after researching and demoing several options, then added self-service articles and
+  simplified ticket intake. Wrote the documentation the team had been operating
+  without.
+
+technologies:
+  - Windows
+  - Linux
+  - helpdesk tooling
+  - compliance frameworks
+
+sensitive_details_removed: true
+redaction_note: >-
+  Network isolation posture and the named accreditation process were generalized. The
+  work is described; the security architecture of a specific customer environment is
+  not.
+
+tags: [it-management, budget, documentation, 0-to-1]

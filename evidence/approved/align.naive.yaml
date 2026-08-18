@@ -1,0 +1,50 @@
+id: align.naive
+type: alignment
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Why Naive
+summary: >-
+  An autonomous company builder has to answer the question Josh has been circling for a
+  year: what may an agent do on its own, what must a human sign off on, and how does
+  anyone check afterwards.
+points:
+  - point: The governance question is the actual product question, and it is unavoidable here.
+    reasoning: >-
+      If businesses deploy AI employees to run companies, then somebody has to decide
+      what those employees may do unsupervised. That is not a feature, it is the
+      substrate. Josh has been building small versions of that boundary for a year,
+      badly at first, and this application is the most careful version he has made.
+    evidence_ids: [proj.naive-application, belief.humans-underwrite]
+  - point: He wrote a constitution for his agent before he knew that was a thing people did.
+    reasoning: >-
+      The standards file governing his coding agent constrains behaviour rather than
+      directing tasks, which is the same species of artifact as a product constitution.
+      He wrote it because his own failures forced it, then later found a company had
+      arrived at the same shape at far greater scale. That is the sort of coincidence
+      worth thirty minutes.
+    evidence_ids: [proj.ballards-platform, belief.documentation-is-shared-memory]
+  - point: Repeatability is the question he most wants answered, and he has no answer.
+    reasoning: >-
+      Four documented failures on his own systems all reported success. Non-deterministic
+      systems that confidently report success are the failure mode he has actually been
+      bitten by. How a company running agents at volume knows the same work produces the
+      same result twice is the first thing he would ask.
+    evidence_ids: [belief.verification-over-confidence, fail.test-passed-feature-did-not]
+  - point: The unglamorous half of running agent fleets is infrastructure, and that part he has done.
+    reasoning: >-
+      Fleets of agents are a compute, cost, and reliability problem before they are an
+      intelligence problem. Josh has run a production virtualization estate, completed a
+      hypervisor migration without losing data, and owns daily security operations. The
+      platform is different from a startup's and he says so elsewhere; the discipline of
+      being responsible for something that has to keep working is not.
+    evidence_ids: [work.current, gap.cloud-native]
+  - point: He found this role through an AI-assisted workflow, which is worth admitting.
+    reasoning: >-
+      Josh uses an AI-assisted career-discovery process to surface companies whose
+      problems match the work he wants to do. It surfaced Naive. Building an application
+      agent as the response was the obvious next move, and saying where the lead came
+      from seems more honest than implying serendipity.
+    evidence_ids: [proj.naive-application]
+tags: [alignment, governance, agents]

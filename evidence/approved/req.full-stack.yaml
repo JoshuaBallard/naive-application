@@ -1,0 +1,22 @@
+id: req.full-stack
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Strong full-stack engineering (Next.js, TypeScript, Python)
+summary: >-
+  One of the three languages is genuinely solid. The other two are demonstrated here for
+  the first time, which is not the same as strong.
+requirement: Strong full-stack engineering across Next.js, TypeScript, and Python
+category: must_have
+status: PARTIAL
+reasoning: >-
+  Python is real: a Flask API and SQLite in daily use on Ballards Platform, and the
+  FastAPI backend running this application. TypeScript and Next.js are not. Josh has
+  never shipped either inside a professional engineering team, and twelve days ago he
+  publicly declined to put React on a static site rather than pretend otherwise. The
+  frontend you are reading is his first substantial build in the stack. Treat that as
+  evidence of learning speed and nothing more. "Strong full-stack" is not supported.
+evidence_ids: [proj.ballards-platform, proj.naive-application, gap.react-typescript]
+tags: [requirement, must-have, engineering]

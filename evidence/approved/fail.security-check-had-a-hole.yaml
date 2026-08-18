@@ -1,0 +1,23 @@
+id: fail.security-check-had-a-hole
+type: failure
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+title: The safety check had a hole in it
+summary: >-
+  A preflight script claimed to detect committed private keys. Its pattern was being
+  interpreted as command options, so it detected nothing.
+what_happened: >-
+  A preflight script claimed to detect private keys committed to the repository. Its
+  grep pattern was being interpreted as command options rather than as a pattern, so it
+  quietly checked nothing and reported clean.
+what_it_taught: >-
+  Security tooling needs known-bad tests. A security tool run only against clean input
+  is indistinguishable from a security tool that does not work.
+fix: >-
+  The tool was tested against deliberately bad input, which is how the bug surfaced at
+  all. That practice is why this application's privacy linter has fourteen tests that
+  feed it deliberate leaks and assert the build fails.
+evidence_url: https://joshuaballard.github.io/built-in-a-day/
+tags: [failure, security, testing]

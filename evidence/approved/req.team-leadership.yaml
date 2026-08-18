@@ -1,0 +1,22 @@
+id: req.team-leadership
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Lead on the product and engineering team
+summary: >-
+  Substantial people leadership, all of it in infrastructure and operations. None of it
+  leading engineers in a product organisation.
+requirement: Lead on the product and engineering team - set direction, unblock execution, raise the bar
+category: must_have
+status: PARTIAL
+reasoning: >-
+  The people-leadership record is real and repeated: 12 Marines supervised with
+  responsibility for their training, a 4-person helpdesk trained and a 5-person
+  deployment team guided at GE Aviation, two L2 administrators mentored and a new ISSO
+  coached at Northrop Grumman. What is absent is leading engineers inside a product
+  organisation, setting technical direction for people building a product, or raising
+  the bar on a codebase. Those are the versions Naive is asking about.
+evidence_ids: [work.usmc, work.ge-aviation, work.northrop]
+tags: [requirement, must-have, leadership]

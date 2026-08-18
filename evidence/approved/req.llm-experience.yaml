@@ -1,0 +1,23 @@
+id: req.llm-experience
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Real LLM experience - tool use, agentic systems, structured outputs
+summary: >-
+  Demonstrated concretely by the application you are using, plus a year of operating a
+  coding agent under written standards. Small scale, and the scale is stated.
+requirement: Real LLM experience across tool use, agentic systems, and structured outputs
+category: must_have
+status: SUPPORTED
+reasoning: >-
+  This application is a working example of all three: nine narrow tools with enum-bounded
+  arguments, an agent loop with a fixed objective, and every answer forced through a
+  structured schema whose claims are verified against evidence ids on the server before
+  anything is shown. Underneath that is roughly a year of operating a coding agent inside
+  written standards, verification rules, and human review boundaries, plus four
+  documented cases of that agent being confidently wrong. What is missing is scale: none
+  of this has run in production, and multi-agent orchestration has not been built at all.
+evidence_ids: [proj.naive-application, proj.ballards-platform, belief.verification-over-confidence, gap.multi-agent]
+tags: [requirement, must-have, llm]

@@ -1,0 +1,26 @@
+id: belief.verification-over-confidence
+type: belief
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+title: Verification matters more than confidence
+summary: >-
+  Every failure Josh has documented while building with AI looked like a success first.
+  That is the whole reason he builds verification into systems now.
+belief: >-
+  A confident report is not evidence. The dangerous failures are the ones that pass
+  their own checks, because nobody goes looking.
+reasoning: >-
+  Four documented failures on Ballards Platform all reported success: the health check
+  said healthy, the rotation test passed, the security script said the repository was
+  clean, and the credential was already in the transcript. None of them were wrong about
+  what they measured. They were wrong about what Josh assumed they measured. This is
+  also why this application computes its verdict on the server and rejects any claim
+  marked supported that cannot name the record behind it.
+origin_ids:
+  - fail.token-leak
+  - fail.localhost-lied
+  - fail.test-passed-feature-did-not
+  - fail.security-check-had-a-hole
+tags: [belief, verification, agents]

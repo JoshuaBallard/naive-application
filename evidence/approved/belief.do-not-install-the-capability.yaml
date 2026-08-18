@@ -1,0 +1,27 @@
+id: belief.do-not-install-the-capability
+type: belief
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Least privilege means not installing the capability
+summary: >-
+  The strongest control is absence. Josh deliberately did not build this application on
+  Naive's own SDK, because an SDK whose purpose is granting capability is the wrong
+  dependency for an application whose argument is that it has none.
+belief: >-
+  A capability you did not install cannot be misconfigured, exploited, or talked into
+  running. Guarding a capability is a weaker control than not having one, and the two
+  are frequently confused because they produce the same diagram.
+reasoning: >-
+  Naive's public starter template gives every end user a KMS-encrypted vault, a virtual
+  payment card, an email inbox, and third-party app connections, governed by an Account
+  Kit. It is a good design for what it does. This application needs none of it. Building
+  on it would have been the stronger signal about tooling familiarity and the weaker
+  signal about judgment, because the whole argument here is that the agent has no
+  filesystem, no shell, no network, and no credentials to lose. So the conventions were
+  adopted and the capabilities were not. The same reasoning applies inside the
+  application: there is no admin path that can edit evidence, because a path that can
+  edit evidence is a path that can be abused into editing evidence.
+origin_ids: [proj.naive-application, belief.environments-not-models]
+tags: [belief, security, least-privilege, architecture]

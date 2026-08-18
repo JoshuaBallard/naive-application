@@ -1,0 +1,22 @@
+id: req.startup-product-0to1
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Prior product leadership at an early-stage startup, 0 to 1 at least once
+summary: >-
+  Four years of real technical product management and three products taken from nothing
+  to shipped, none of it at an early-stage startup.
+requirement: Prior experience leading product at an early-stage startup, 0 to 1 at minimum once
+category: must_have
+status: PARTIAL
+reasoning: >-
+  The 0 to 1 half is supported: Quiet Wells is live, Dad Mode ran as a closed cohort, and
+  Ballards Platform runs daily. The product-leadership half is supported in an enterprise
+  setting only, as Sr Technical Product Manager at GE Aviation for four years, owning
+  developer-facing tooling and rebuilding the prioritisation system for it. The specific
+  thing asked for, leading product at an early-stage startup, has not happened. Building
+  product alone and leading product are different jobs.
+evidence_ids: [work.ge-aviation, proj.quiet-wells, proj.dad-mode, gap.startup-product-leadership]
+tags: [requirement, must-have, product]

@@ -1,0 +1,19 @@
+id: req.multi-agent
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Multi-agent systems or agent orchestration experience
+summary: None. This is the cleanest gap against the role and it should not be softened.
+requirement: Multi-agent systems or agent orchestration experience
+category: nice_to_have
+status: GAP
+reasoning: >-
+  Josh has not built or operated a multi-agent system. This application is deliberately a
+  single agent, because at roughly two dozen evidence records a planner-critic-researcher
+  arrangement would be theatre. That is a defensible design decision and it is also the
+  honest ceiling of the experience. For a company whose product is fleets of AI employees
+  running companies, this is a real gap.
+evidence_ids: [gap.multi-agent]
+tags: [requirement, nice-to-have, agents]

@@ -1,0 +1,51 @@
+id: proj.dad-mode
+type: project
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+
+title: Dad Mode
+summary: >-
+  An AI coaching product for busy fathers, run as a closed cohort of six, where the
+  most important fix Josh shipped was rewriting the coach's personality rather than
+  building a feature.
+
+problem: >-
+  Most dads trying to get healthier do not need more information. They need less
+  friction. The gap was not knowledge, it was everything between intent and action.
+
+what_josh_built: >-
+  A coaching product with an AI coach named Atlas that did more of the work behind the
+  scenes and gave users a simple interface for moving toward a goal. Run as a closed
+  program with a cohort of six, from June to October 2025. Built with Lovable and
+  Gemini.
+
+what_josh_learned: >-
+  Personality is a product feature, and an agent becomes exactly what its operating
+  instructions tell it to be. Josh made Atlas too harsh. The six dads in the cohort
+  told him so. Rewriting Atlas's operating instructions fixed the product faster than
+  any feature he could have shipped. That is the first time he changed a system's
+  behaviour by changing its written instructions rather than its code, and it is
+  directly upstream of how he now thinks about governing agents.
+
+technologies: [Lovable, Gemini]
+
+verified_claims:
+  - claim: Ran as a closed program with a cohort of six users, June to October 2025.
+    verification: self_reported
+  - claim: >-
+      User feedback led to rewriting the AI coach's operating instructions, which
+      resolved the complaint.
+    verification: self_reported
+
+known_limitations:
+  - Six users. That is a signal, not a sample.
+  - >-
+      Closed program. There is no public artifact a stranger can open to check any of
+      this, so treat the whole record as self-reported.
+  - >-
+      Built on a no-code platform. The product judgment is Josh's; the engineering
+      underneath it is not.
+
+tags: [ai-product, 0-to-1, user-feedback, agent-behaviour]

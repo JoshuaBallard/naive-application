@@ -1,0 +1,24 @@
+id: fail.test-passed-feature-did-not
+type: failure
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+title: A passing test that could not fail
+summary: >-
+  An authentication check compared a container's token against the same container's
+  running configuration, so it could report success without proving anything.
+what_happened: >-
+  An authentication check compared a container's token against that same container's
+  running configuration. It could report success whether or not credential rotation had
+  actually worked.
+what_it_taught: >-
+  A passing test can still test the wrong thing, and a green check is the most
+  persuasive form of wrong there is. This is the failure most directly upstream of how
+  this application handles claims: a claim marked supported has to name the record that
+  supports it, and the server checks.
+fix: >-
+  The test was rebuilt using independently sourced values, and it was confirmed that the
+  old token was actually rejected.
+evidence_url: https://joshuaballard.github.io/built-in-a-day/
+tags: [failure, verification, testing]

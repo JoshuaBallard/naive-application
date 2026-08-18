@@ -1,0 +1,26 @@
+id: gap.startup-product-leadership
+type: gap
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: Product leadership was at an enterprise, not a startup
+summary: >-
+  Four years of real technical product management, all of it inside a large aerospace
+  manufacturer. None of it at an early-stage startup, which is what the posting asks
+  for.
+gap: >-
+  Josh has led product for internal developer-facing tooling at GE Aviation for four
+  years, and has taken three personal products from nothing to shipped. He has never
+  led product at an early-stage startup, and has never led a product team through 0 to
+  1 with other engineers reporting into the work.
+why_it_matters: >-
+  Naive asks for "prior experience leading product at an early-stage startup, 0 to 1 at
+  minimum once". Enterprise product management and startup product leadership share a
+  title and very little else: the constraints, the speed, the tolerance for being wrong
+  in public, and the absence of anyone to escalate to are all different.
+honest_mitigation: >-
+  The 0 to 1 work is genuine but solo. Building product alone and leading product are
+  different jobs, and this record exists so the application does not blur them.
+evidence_ids: [work.ge-aviation, work.etegent, proj.quiet-wells, proj.dad-mode]
+tags: [gap, product, must-have]

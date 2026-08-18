@@ -1,0 +1,23 @@
+id: req.location
+type: role_requirement
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: self_authored
+title: San Francisco, on-site
+summary: >-
+  The role is listed on-site in San Francisco. Josh is in Ohio and is not relocating.
+  This is reported separately from the evidence assessment because it can end the
+  conversation regardless of how that assessment goes.
+requirement: Based in San Francisco, on-site
+category: practical
+status: GAP
+reasoning: >-
+  Josh lives in the Greater Cincinnati area and is not moving. What he is proposing is
+  remote, with roughly a week on-site every couple of months. Against an on-site role at
+  an early-stage company where the work involves sitting next to the CEO and CTO, that is
+  probably a larger obstacle than any skills gap in this record. TypeScript can be learned
+  inside a codebase; geography cannot. If this is disqualifying, it is better established
+  in the first minute than the thirtieth.
+evidence_ids: [profile.josh]
+tags: [requirement, practical, blocking]

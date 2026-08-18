@@ -1,0 +1,22 @@
+id: fail.localhost-lied
+type: failure
+approved: true
+reviewed_on: 2026-08-17
+reviewed_by: josh
+source_class: public_artifact
+title: Health checks failed while every service was healthy
+summary: >-
+  Documented health checks reported failure against services that were fine. Inside the
+  containers, localhost resolved to IPv6 while the services listened on IPv4.
+what_happened: >-
+  Several documented health checks failed even though every service was running
+  correctly. The commands looked right. Inside the containers, localhost resolved to
+  IPv6 while the services were listening on IPv4.
+what_it_taught: >-
+  Exact verification beats plausible commands. A command that looks correct to a reader,
+  and to a model, can still be checking something other than what it claims.
+fix: >-
+  The checks were rewritten to verify the thing they claimed to verify, and were run to
+  prove it rather than reasoned about.
+evidence_url: https://joshuaballard.github.io/built-in-a-day/
+tags: [failure, verification, agents]
