@@ -37,7 +37,7 @@ PRICE_CACHED = 200_000
 PRICE_OUTPUT = 10_000_000
 
 DAILY_SPEND_CAP_MICROS = int(os.environ.get("DAILY_SPEND_CAP_USD", "3")) * 1_000_000
-MAX_SESSIONS_PER_IP_PER_DAY = int(os.environ.get("MAX_SESSIONS_PER_IP", "6"))
+MAX_SESSIONS_PER_IP_PER_DAY = int(os.environ.get("MAX_SESSIONS_PER_IP", "20"))
 ADMIN_TOKEN = os.environ.get("ADMIN_TOKEN", "")
 ALLOWED_ORIGINS = [o for o in os.environ.get("ALLOWED_ORIGINS", "").split(",") if o]
 

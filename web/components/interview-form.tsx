@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { api, ApiError } from "@/lib/api";
+import { useSession } from "@/lib/session";
 
 interface Window {
   id: string;
@@ -10,18 +11,13 @@ interface Window {
 }
 
 export function InterviewForm({ windows }: { windows: Window[] }) {
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  const { sessionId, error: sessionError } = useSession(8);
   const [windowId, setWindowId] = useState(windows[0]?.id ?? "");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<{ reference: string; what_happens_next: string } | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  useEffect(() => {
-    api
-      .startSession()
-      .then((s) => setSessionId(s.session_id))
-      .catch(() => setError("Could not start a session. Try again in a moment."));
-  }, []);
+  const error = submitError ?? sessionError;
 
   if (done) {
     return (
@@ -42,7 +38,7 @@ export function InterviewForm({ windows }: { windows: Window[] }) {
 
         const form = new FormData(e.currentTarget);
         setSubmitting(true);
-        setError(null);
+        setSubmitError(null);
 
         try {
           const result = await api.requestInterview({
@@ -55,7 +51,7 @@ export function InterviewForm({ windows }: { windows: Window[] }) {
           });
           setDone(result);
         } catch (err: unknown) {
-          setError(err instanceof ApiError ? err.message : "That did not go through.");
+          setSubmitError(err instanceof ApiError ? err.message : "That did not go through.");
         } finally {
           setSubmitting(false);
         }
