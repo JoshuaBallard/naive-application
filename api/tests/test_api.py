@@ -235,3 +235,17 @@ def test_ip_hashes_are_salted_and_short(monkeypatch) -> None:
     hashed = hash_ip("203.0.113.14")
     assert "203.0.113.14" not in hashed
     assert len(hashed) == 16
+
+
+def test_no_raw_address_reaches_the_logs(client, caplog) -> None:
+    """DISCLOSURE.md promises addresses are only ever stored hashed. uvicorn's default
+    access log breaks that promise, which is why the container disables it."""
+    from app.observability import log
+
+    with caplog.at_level("INFO", logger="naive-application"):
+        client.post("/api/session")
+        log("session.created", ip_hash="deadbeefdeadbeef")
+
+    assert "testclient" not in caplog.text
+    assert "127.0.0.1" not in caplog.text
+    assert "deadbeefdeadbeef" in caplog.text

@@ -25,4 +25,6 @@ RUN --mount=type=secret,id=exclusions,target=/repo/security/exclusions.local.txt
 
 EXPOSE 8000
 ENTRYPOINT ["/repo/scripts/entrypoint.sh"]
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# --no-access-log: uvicorn logs raw client IPs by default. The structured logger
+# records a daily-salted hash instead, and DISCLOSURE.md promises exactly that.
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log", "--proxy-headers", "--forwarded-allow-ips", "*"]
