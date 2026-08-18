@@ -38,9 +38,17 @@ class FakeRunner:
         )
 
 
+ADMIN = "test-admin-token"
+
+
 @pytest.fixture
 def client(monkeypatch, tmp_path):
+    # Pinned explicitly rather than read from the environment. These used to come from
+    # os.environ.setdefault in conftest, which silently stopped working the moment a
+    # real ADMIN_TOKEN appeared in .env — a test that depends on ambient environment
+    # passes for the wrong reason right up until it fails for one.
     monkeypatch.setattr(db, "DB_PATH", tmp_path / "api.db")
+    monkeypatch.setattr(main, "ADMIN_TOKEN", ADMIN)
     monkeypatch.setattr(main, "RUNNER", FakeRunner())
     db.init()
     with TestClient(main.app) as c:
@@ -190,7 +198,7 @@ def test_admin_returns_requests_with_the_right_token(client) -> None:
     })
 
     body = client.get(
-        "/api/admin/interviews", headers={"x-admin-token": "test-admin-token"}
+        "/api/admin/interviews", headers={"x-admin-token": ADMIN}
     ).json()
 
     assert body["requests"][0]["email"] == "sean@example.com"

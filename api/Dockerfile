@@ -13,6 +13,16 @@ RUN pip install --no-cache-dir -e ".[dev]"
 
 COPY api/ ./
 COPY evidence/ /repo/evidence/
+COPY scripts/entrypoint.sh /repo/scripts/entrypoint.sh
+RUN chmod +x /repo/scripts/entrypoint.sh
+
+# The compiled artifact is built into the image rather than shipped as source. If the
+# gate fails, there is no image — a leak cannot reach production by being deployed
+# faster than it is noticed.
+ARG EXCLUSIONS
+RUN --mount=type=secret,id=exclusions,target=/repo/security/exclusions.local.txt \
+    python -m app.evidence.compile
 
 EXPOSE 8000
+ENTRYPOINT ["/repo/scripts/entrypoint.sh"]
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

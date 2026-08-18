@@ -1,0 +1,50 @@
+# The API service. Runs on Fly, on an account with nothing else on it.
+#
+# That isolation is a control, not a preference: this process must not sit anywhere it
+# could see something it was not given. Running it on the machine that hosts the
+# evidence's private origins would undo the whole argument.
+
+app = "naive-application-api"
+primary_region = "ord"
+
+[build]
+  dockerfile = "api/Dockerfile"
+
+[env]
+  DATABASE_PATH = "/data/application.db"
+  AGENT_MODEL = "claude-sonnet-5"
+  AGENT_EFFORT = "medium"
+  AGENT_QUESTIONS_PER_SESSION = "8"
+  DAILY_SPEND_CAP_USD = "3"
+  MAX_SESSIONS_PER_IP = "6"
+  EVIDENCE_EXCLUSIONS_FILE = "/repo/security/exclusions.local.txt"
+
+# Secrets, set with `fly secrets set` and never in this file:
+#   ANTHROPIC_API_KEY  ADMIN_TOKEN  IP_HASH_SALT  ALLOWED_ORIGINS
+
+[[mounts]]
+  source = "application_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = "suspend"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 20
+    hard_limit = 40
+
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  path = "/health"
+  timeout = "5s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

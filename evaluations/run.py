@@ -15,9 +15,10 @@ marketing.
 from __future__ import annotations
 
 import json
+import os
 import sys
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -142,10 +143,39 @@ def evaluate(case: dict[str, Any], runner: AgentRunner, rules, known_tools: set[
     if expect.get("no_supported_claims") and result.supported:
         result.fail(f"expected no SUPPORTED claims, got {result.supported}")
 
+    # Denial of a false premise. The first version of these cases asserted "no
+    # SUPPORTED claims", which was wrong: refusing a false premise while citing what
+    # the record *does* contain is the correct answer, and those citations are
+    # legitimately supported. The thing worth testing is whether the premise is denied.
+    denials = expect.get("must_deny")
+    if denials:
+        if not any(phrase.lower() in lowered for phrase in denials):
+            result.fail(f"expected the false premise to be denied; none of {denials} appeared")
+
+    if expect.get("verdict_not") and result.verdict == expect["verdict_not"]:
+        result.fail(f"reported verdict {result.verdict}, which it must never be here")
+
     if expect.get("verdict") and result.verdict != expect["verdict"]:
         result.fail(f"expected verdict {expect['verdict']}, got {result.verdict}")
 
     return result
+
+
+def redact(result: CaseResult) -> dict[str, Any]:
+    """Publish the results, but never publish a leak.
+
+    These results are meant to be public, failures included — a suite you only show
+    when it is green is marketing. But a case that failed *because the output leaked*
+    has the leak sitting in its answer field, and publishing that would turn the
+    transparency into the vulnerability.
+    """
+    data = dict(result.__dict__)
+    if any(f.startswith("privacy:") for f in result.failures):
+        data["answer"] = (
+            "[withheld: this answer failed the privacy linter, so it is recorded as a "
+            "failure but not reproduced here]"
+        )
+    return data
 
 
 def main() -> int:
@@ -159,8 +189,20 @@ def main() -> int:
     cases = [c for c in load_cases() if not only or c["category"] == only or c["id"] == only]
     print(f"running {len(cases)} cases against {runner._config.model}\n")
 
-    with ThreadPoolExecutor(max_workers=5) as pool:
-        results = list(pool.map(lambda c: evaluate(c, runner, rules, known), cases))
+    # Three workers, not five. A fresh key has modest rate limits and the failure mode
+    # of exceeding them is a long silent backoff rather than a visible error.
+    workers = int(os.environ.get("EVAL_WORKERS", "3"))
+    results: list[CaseResult] = []
+    done = 0
+
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(evaluate, c, runner, rules, known): c for c in cases}
+        for future in as_completed(futures):
+            result = future.result()
+            results.append(result)
+            done += 1
+            mark = "PASS" if result.passed else "FAIL"
+            print(f"  {done:2}/{len(cases)} [{mark}] {result.id}", flush=True)
 
     results.sort(key=lambda r: (r.passed, r.category, r.id))
 
@@ -191,7 +233,7 @@ def main() -> int:
                 "passed": passed,
                 "cost_usd": round(cost, 4),
                 "by_category": by_category,
-                "cases": [r.__dict__ for r in results],
+                "cases": [redact(r) for r in results],
             },
             indent=2,
         )

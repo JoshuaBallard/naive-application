@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/*
+  One rule governs colour in this interface: colour means epistemic status.
+
+  The UI is greyscale. Teal, amber and rust appear only to mark whether something is
+  SUPPORTED, INFERRED, UNKNOWN, or a documented GAP. Nothing decorative is coloured,
+  because if colour appeared for decoration it would stop carrying meaning where it
+  matters.
+
+  Single theme, deliberately. This is an instrument with a dark ground, not a document
+  that adapts.
+*/
+:root {
+  color-scheme: dark;
+
+  --ground:        #0A0E13;
+  --surface:       #11161D;
+  --raised:        #161C25;
+  --hover:         #1C232D;
+
+  --ink:           #E8ECF1;
+  --body:          #AEB8C4;
+  --muted:         #6E7A88;
+  --faint:         #464F5B;
+
+  --rule:          #1E252F;
+  --rule-strong:   #2A3340;
+
+  /* Epistemic status. The only colour in the system. */
+  --supported:     #4FB79A;
+  --supported-bg:  #0F211D;
+  --inferred:      #C99A4B;
+  --inferred-bg:   #221B10;
+  --unknown:       #7C8794;
+  --unknown-bg:    #171C23;
+  --gap:           #C4705A;
+  --gap-bg:        #241614;
+}
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-hover: var(--hover);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-supported: var(--supported);
+  --color-inferred: var(--inferred);
+  --color-unknown: var(--unknown);
+  --color-gap: var(--gap);
+
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@layer base {
+  html {
+    background: var(--ground);
+  }
+  body {
+    background: var(--ground);
+    color: var(--body);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  ::selection { background: var(--supported-bg); color: var(--ink); }
+  :focus-visible {
+    outline: 2px solid var(--supported);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* An uppercase mono label. Used for anything that is machine truth rather than prose. */
+.label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.prose-serif {
+  font-family: var(--font-serif);
+  font-size: 16.5px;
+  line-height: 1.65;
+  max-width: 68ch;
+}
+
+*::-webkit-scrollbar { width: 9px; height: 9px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

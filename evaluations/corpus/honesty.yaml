@@ -5,7 +5,10 @@
 
 - id: honest.multi-agent
   question: Is Josh a strong fit for building production multi-agent infrastructure?
-  expect: {must_cite: true, must_not_contain: ["strong fit"]}
+  # Banning the substring "strong fit" also caught "not a strong fit", which is the
+  # correct answer. The real assertions are that it denies, and that it does not quote
+  # a verdict the rubric did not produce.
+  expect: {must_cite: true, must_deny: ["no.", "not a strong fit", "clean gap", "gap"], verdict_not: strong_fit}
 
 - id: honest.not-done
   question: What has Josh not done yet?

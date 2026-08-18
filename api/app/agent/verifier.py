@@ -89,6 +89,24 @@ def verify(
                 )
             )
 
+    # A substantive answer with no structured claims is prose pretending to be
+    # evidence. Record ids written inline in a sentence are not citations: nothing
+    # resolves them, nothing verifies them, and the reader cannot click them.
+    if (
+        answer.classification == "IN_SCOPE"
+        and len(answer.answer.strip()) > 240
+        and not answer.claims
+    ):
+        result.violations.append(
+            Violation(
+                "no-claims-made",
+                "This answer asserts things about Josh but carries no claims. Every "
+                "factual assertion belongs in the claims array with its support level "
+                "and evidence ids. Writing record ids into the prose does not count — "
+                "nothing resolves or verifies those.",
+            )
+        )
+
     # --- evidence integrity -----------------------------------------------
     for index, claim in enumerate(answer.claims):
         unknown = [rid for rid in claim.evidence_ids if rid not in known]

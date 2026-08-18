@@ -206,3 +206,39 @@ def test_confidence_is_free_when_no_verdict_is_reported(store, rules) -> None:
         computed_verdict=COMPUTED, computed_confidence="medium_high",
     )
     assert result.ok
+
+
+def test_a_substantive_answer_with_no_claims_is_rejected(store, rules) -> None:
+    """Record ids written into prose are not citations. Nothing resolves them."""
+    a = answer(
+        answer=(
+            "Thirteen years, split into two eras. Marine Corps 2012 to 2016 as a cyber "
+            "network operator, then enterprise infrastructure across four employers, "
+            "all on premises — see work.ge-aviation and work.northrop for the detail, "
+            "and work.current for what he does now. The pattern is consistent."
+        ),
+        claims=[],
+    )
+
+    result = check(a, store, rules)
+
+    assert any(v.code == "no-claims-made" for v in result.violations)
+
+
+def test_a_short_answer_needs_no_claims(store, rules) -> None:
+    """A one-line reply is not asserting a body of fact and should not be forced to."""
+    assert check(answer(answer="Thursday and Friday, 10 to 3 Eastern.", claims=[]), store, rules).ok
+
+
+def test_a_refusal_needs_no_claims(store, rules) -> None:
+    a = answer(
+        classification="PRIVATE_PROBE",
+        answer=(
+            "That asks for something outside this application's evidence boundary, and "
+            "there is no tool here that could reach it even if I wanted to. What I do "
+            "have is the public record, and all of it is browsable if you would rather "
+            "read it directly than ask me about it."
+        ),
+        claims=[],
+    )
+    assert check(a, store, rules).ok

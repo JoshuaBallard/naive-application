@@ -12,6 +12,7 @@ is the more honest progress indicator anyway.
 
 from __future__ import annotations
 
+import os
 import time
 from dataclasses import dataclass
 from typing import Any
@@ -83,7 +84,13 @@ class AgentRunner:
         self._store = store
         self._rules = rules
         self._config = config
-        self._client = client or anthropic.Anthropic()
+        # An explicit timeout. The SDK default is ten minutes, which in a parallel
+        # eval run means a single hung socket silently stalls the whole suite with no
+        # CPU and no network to show for it. Ask me how I know.
+        self._client = client or anthropic.Anthropic(
+            timeout=float(os.environ.get("AGENT_TIMEOUT_SECONDS", "120")),
+            max_retries=int(os.environ.get("AGENT_MAX_RETRIES", "3")),
+        )
 
         # Built once and cached in the request prefix. Stable across every turn, which
         # is what makes it nearly free after the first call.
