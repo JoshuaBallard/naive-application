@@ -270,6 +270,7 @@ class AgentRunner:
             rules=self._rules,
             computed_verdict=self._verdict,
             computed_confidence=self._confidence,
+            evidence_read=list(trace.evidence_ids),
         )
 
     def _run_tools(

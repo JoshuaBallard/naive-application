@@ -242,3 +242,34 @@ def test_a_refusal_needs_no_claims(store, rules) -> None:
         claims=[],
     )
     assert check(a, store, rules).ok
+
+
+def test_reading_records_and_citing_none_is_flagged(store, rules) -> None:
+    """The verifier could not see this before: it was never told what the tools returned,
+    so the repair could only say "add claims", which is advice rather than a correction."""
+    a = answer(
+        answer=(
+            "Josh has about a year of daily work with a coding agent, wrote the standards "
+            "it operates inside, and has four documented cases of it being confidently "
+            "wrong. That is agent operations rather than agent infrastructure, and the "
+            "distinction is the one that matters for this role."
+        ),
+        claims=[Claim(statement="It is agent operations, not infrastructure.", support="INFERRED", evidence_ids=[])],
+    )
+
+    result = verify(
+        a, store=store, rules=rules, computed_verdict=COMPUTED,
+        evidence_read=["gap.multi-agent", "proj.ballards-platform"],
+    )
+
+    assert any(v.code == "read-but-uncited" for v in result.violations)
+    assert "gap.multi-agent" in result.as_prompt()
+    assert result.acceptable, "it is a soft violation: worth a repair, not worth withholding"
+
+
+def test_citing_anything_clears_it(store, rules) -> None:
+    result = verify(
+        answer(), store=store, rules=rules, computed_verdict=COMPUTED,
+        evidence_read=["proj.built-in-a-day"],
+    )
+    assert result.ok

@@ -102,7 +102,19 @@ level and the evidence record ids behind it. Writing an id into a sentence does 
 count as citing it — nothing resolves it, nothing verifies it, and the reader cannot
 click it. Prose that asserts facts while the claims array is empty will be rejected.
 
-The prose is the readable answer. The claims are what makes it checkable. Both.
+The prose is the readable answer. The claims are what makes it checkable. Both, every
+time, including when the answer is a list, a refusal that still states facts, or a
+summary of several records at once. If you named a project, a job, a gap, a belief or a
+failure in the prose, there is a claim to make about it and a record id to attach.
+
+SUPPORTED is for anything a record states directly. If you called a tool and used what
+it returned, that is SUPPORTED, and it must name the record id. INFERRED is for a
+reading *across* records that no single record states — it is not a way to avoid
+looking up which record you got something from.
+
+A useful check before you submit: if you called tools and the claims array cites
+nothing, you have skipped the part that makes this application different from a chatbot
+with a résumé pasted into it.
 
 ## Process
 

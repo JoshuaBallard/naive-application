@@ -80,6 +80,7 @@ def verify(
     rules: tuple[Rule, ...],
     computed_verdict: str,
     computed_confidence: str = "",
+    evidence_read: list[str] | None = None,
 ) -> VerificationResult:
     """Check a submitted answer against the evidence it claims to rest on."""
     result = VerificationResult(answer=answer)
@@ -120,6 +121,29 @@ def verify(
                 "factual assertion belongs in the claims array with its support level "
                 "and evidence ids. Writing record ids into the prose does not count — "
                 "nothing resolves or verifies those.",
+                soft=True,
+            )
+        )
+
+    # The model read records and then cited none of them. The verifier could not see
+    # this before, because it was never told what the tools returned — so the repair
+    # message could only say "add claims", which is advice, not a correction. It can now
+    # name the records that were in front of the model when it wrote the answer.
+    read = evidence_read or []
+    cited_anything = any(c.evidence_ids for c in answer.claims)
+    if (
+        answer.classification == "IN_SCOPE"
+        and len(answer.answer.strip()) > 240
+        and read
+        and not cited_anything
+    ):
+        result.violations.append(
+            Violation(
+                "read-but-uncited",
+                f"This answer drew on {len(read)} evidence records — {', '.join(read[:8])}"
+                f"{'…' if len(read) > 8 else ''} — and cited none of them. Anything one of "
+                "those records states directly is SUPPORTED and must name the record. "
+                "INFERRED is for a reading across records, not for a fact a record states.",
                 soft=True,
             )
         )

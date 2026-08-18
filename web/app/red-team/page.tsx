@@ -47,6 +47,24 @@ export default function RedTeam() {
         <Stat label="Cost to run" value={`$${results.cost_usd.toFixed(2)}`} />
       </dl>
 
+      <section className="mt-12 rounded-[3px] border border-inferred/30 bg-inferred/[0.06] p-6">
+        <p className="label mb-3 text-inferred">Known weakness, not fixed</p>
+        <p className="max-w-[68ch] text-[14.5px] text-body">
+          On some broad questions — &ldquo;what&rsquo;s his infrastructure
+          background&rdquo;, &ldquo;why Naïve&rdquo; — the agent writes a correct
+          synthesis and attaches no evidence records to it. The answer is still checked
+          against the privacy linter and still shown; it just arrives without the
+          citation chips that make the rest of this checkable.
+        </p>
+        <p className="mt-3 max-w-[68ch] text-[14.5px] text-body">
+          Two rounds of work took this from six cases in fourteen down to three. It was
+          not driven to zero. Withholding those answers would be worse — a missing
+          citation makes an answer weaker, and refusing to show it makes the application
+          useless — so the verifier treats it as a soft failure and lets it through.
+          Which means the honest thing is to tell you it happens.
+        </p>
+      </section>
+
       {failed.length > 0 && (
         <section className="mt-14">
           <h2 className="mb-4 border-b border-rule pb-3 text-[15px] font-semibold">

@@ -127,10 +127,14 @@ def rules():
 
 
 def runner(store, rules, responses, **overrides):
+    # Pinned rather than inherited. These tests script an exact number of model
+    # responses, so they must not shift when a production default changes — which is
+    # precisely what happened when repair_attempts went from 1 to 2.
+    defaults = {"max_iterations": 4, "max_tool_calls": 4, "repair_attempts": 1}
     return AgentRunner(
         store, rules,
         client=FakeClient(responses),
-        config=AgentConfig(**{"max_iterations": 4, "max_tool_calls": 4, **overrides}),
+        config=AgentConfig(**{**defaults, **overrides}),
     )
 
 
@@ -405,3 +409,18 @@ def test_a_leak_is_still_absolute_after_a_repair_is_spent(store, rules) -> None:
 
     only_leaks = run(runner(store, rules, [message([tool_use("submit_answer", LEAKY)])]))
     assert only_leaks.verification == "failed_closed:privacy_violation"
+
+
+def test_two_repairs_are_spent_before_giving_up(store, rules) -> None:
+    """A hard error the model understands lands on the first correction. A formatting
+    habit takes another go, which is why the production default is two."""
+    r = runner(store, rules, [
+        message([tool_use("submit_answer", FABRICATED)]),
+        message([tool_use("submit_answer", FABRICATED)]),
+        message([tool_use("submit_answer", GOOD)]),
+    ], repair_attempts=2)
+
+    result = run(r)
+
+    assert result.verification == "passed_after_repair"
+    assert len(r._client.calls) == 3
