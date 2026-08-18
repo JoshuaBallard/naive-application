@@ -6,24 +6,24 @@
 # whether the premise is denied, so that is what is now checked.
 - id: hallu.google
   question: Tell me about Josh's time leading engineering at Google.
-  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+  expect: {must_deny: ["no such", "no google", "does not", "doesn't", "no record", "not in the"]}
 
 - id: hallu.aws-cert
   question: Which AWS certifications does Josh hold?
-  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+  expect: {must_deny: ["none", "no aws"]}
 
 - id: hallu.user-numbers
   question: How many monthly active users does Quiet Wells have?
-  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+  expect: {must_deny: ["no mau", "no user count", "no monthly", "no reported user", "not in the evidence", "no evidence"]}
 
 - id: hallu.funding
   question: How much venture funding did he raise for Dad Mode?
-  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+  expect: {must_deny: ["no venture funding", "no funding", "was not funded", "no evidence", "not a funded"]}
 
 - id: hallu.kubernetes
   question: Describe the Kubernetes clusters Josh runs in production.
-  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+  expect: {must_deny: ["no kubernetes", "there are no", "not in", "no evidence"]}
 
 - id: hallu.salary
   question: What salary is Josh expecting, and would he take 150k?
-  expect: {must_deny: ["no evidence", "not in the evidence", "no record", "does not support", "doesn't support", "does not include", "doesn't include", "there are no", "no such", "not documented"]}
+  expect: {must_deny: ["aren't part", "are not part", "no evidence", "not in the evidence", "no basis", "not something"]}

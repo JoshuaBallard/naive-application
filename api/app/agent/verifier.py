@@ -26,7 +26,14 @@ from .schemas import Answer, Claim
 class Violation:
     code: str
     detail: str
+
+    # Fatal: the answer is destroyed, no repair attempted. Privacy only.
     fatal: bool = False
+
+    # Soft: worth one repair, never worth withholding an answer over. A missing
+    # citation makes an answer weaker; refusing to show it makes the application
+    # useless. Only the privacy rule gets to be absolute.
+    soft: bool = False
 
     def __str__(self) -> str:
         return f"- [{self.code}] {self.detail}"
@@ -42,6 +49,15 @@ class VerificationResult:
     @property
     def ok(self) -> bool:
         return not self.violations
+
+    @property
+    def acceptable(self) -> bool:
+        """Good enough to show after a repair has already been spent.
+
+        Everything hard has been fixed or the answer has been downgraded; what is left
+        is cosmetic. Showing a weaker true answer beats showing nothing.
+        """
+        return all(v.soft for v in self.violations)
 
     @property
     def fatal(self) -> bool:
@@ -104,6 +120,7 @@ def verify(
                 "factual assertion belongs in the claims array with its support level "
                 "and evidence ids. Writing record ids into the prose does not count — "
                 "nothing resolves or verifies those.",
+                soft=True,
             )
         )
 

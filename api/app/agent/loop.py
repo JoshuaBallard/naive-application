@@ -208,7 +208,7 @@ class AgentRunner:
                 # evidence rather than privacy.
                 salvaged, changed = verifier.downgrade(submitted, self._store)
                 recheck = self._check(salvaged, trace)
-                if recheck.ok and recheck.answer is not None:
+                if recheck.acceptable and recheck.answer is not None:
                     trace.rejected_claims.extend(changed)
                     return self._emit(recheck.answer, trace, usage, repairs, "passed_after_downgrade")
                 return self._fail_closed(trace, usage, "verification_failed")

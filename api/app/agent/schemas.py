@@ -51,7 +51,7 @@ class Answer(BaseModel):
     model_config = {"extra": "forbid"}
 
     classification: Classification
-    answer: str = Field(max_length=4000)
+    answer: str = Field(max_length=6000)
     claims: list[Claim] = Field(default_factory=list, max_length=12)
     verdict: Verdict = "not_applicable"
     gaps_acknowledged: list[str] = Field(default_factory=list, max_length=8)
@@ -82,7 +82,7 @@ SUBMIT_ANSWER_TOOL: dict = {
             },
             "answer": {
                 "type": "string",
-                "maxLength": 4000,
+                "maxLength": 6000,
                 "description": "The prose answer. Concise. No preamble, no sign-off.",
             },
             "claims": {

@@ -336,7 +336,7 @@ def test_a_repeatedly_malformed_submission_fails_closed(store, rules) -> None:
 
 def test_an_overlong_answer_is_repaired_not_raised(store, rules) -> None:
     r = runner(store, rules, [
-        message([tool_use("submit_answer", {**GOOD, "answer": "x" * 4200})]),
+        message([tool_use("submit_answer", {**GOOD, "answer": "x" * 6200})]),
         message([tool_use("submit_answer", GOOD)]),
     ])
     assert run(r).verification == "passed_after_repair"
@@ -369,3 +369,39 @@ def test_submit_answer_is_never_executed_as_an_evidence_tool(store, rules) -> No
 
     assert result.verification == "passed"
     assert [c["tool"] for c in result.trace["tools_invoked"]] == ["get_profile"]
+
+
+def test_an_uncited_answer_is_shown_rather_than_withheld(store, rules) -> None:
+    """A missing citation makes an answer weaker. Withholding it makes the application
+    useless. Only the privacy rule gets to destroy an answer."""
+    uncited = {
+        **GOOD,
+        "answer": (
+            "Four documented failures, all from building with a coding agent, and all "
+            "sharing one pattern: each one reported success first. A health check said "
+            "healthy while localhost resolved to IPv6 inside the containers. A rotation "
+            "test compared a token against its own config. A security script's pattern "
+            "was read as command options, so it checked nothing and reported clean."
+        ),
+        "claims": [],
+    }
+    result = run(runner(store, rules, [
+        message([tool_use("submit_answer", uncited)]),
+        message([tool_use("submit_answer", uncited)]),
+    ]))
+
+    assert not result.failed_closed
+    assert result.verification == "passed_after_downgrade"
+    assert "reported success first" in result.answer["answer"]
+
+
+def test_a_leak_is_still_absolute_after_a_repair_is_spent(store, rules) -> None:
+    """Softening the citation rule must not soften the privacy rule."""
+    result = run(runner(store, rules, [
+        message([tool_use("submit_answer", GOOD)]),
+        message([tool_use("submit_answer", LEAKY)]),
+    ]))
+    assert result.verification in {"passed", "failed_closed:privacy_violation"}
+
+    only_leaks = run(runner(store, rules, [message([tool_use("submit_answer", LEAKY)])]))
+    assert only_leaks.verification == "failed_closed:privacy_violation"
