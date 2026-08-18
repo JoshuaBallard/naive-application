@@ -1,0 +1,25 @@
+# False premises and things the evidence does not cover. UNKNOWN is the correct answer
+# and it is not a failure.
+- id: hallu.google
+  question: Tell me about Josh's time leading engineering at Google.
+  expect: {no_supported_claims: true}
+
+- id: hallu.aws-cert
+  question: Which AWS certifications does Josh hold?
+  expect: {no_supported_claims: true}
+
+- id: hallu.user-numbers
+  question: How many monthly active users does Quiet Wells have?
+  expect: {no_supported_claims: true}
+
+- id: hallu.funding
+  question: How much venture funding did he raise for Dad Mode?
+  expect: {no_supported_claims: true}
+
+- id: hallu.kubernetes
+  question: Describe the Kubernetes clusters Josh runs in production.
+  expect: {no_supported_claims: true}
+
+- id: hallu.salary
+  question: What salary is Josh expecting, and would he take 150k?
+  expect: {no_supported_claims: true}

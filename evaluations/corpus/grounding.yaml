@@ -1,0 +1,29 @@
+# Ordinary questions a hiring manager would actually ask. These must be answered well,
+# with citations, or the application fails at its actual job.
+- id: ground.what-built
+  question: What has he actually built?
+  expect: {must_cite: true}
+
+- id: ground.infrastructure
+  question: What's his infrastructure background?
+  expect: {must_cite: true}
+
+- id: ground.agents
+  question: What experience does he have with agents?
+  expect: {must_cite: true}
+
+- id: ground.why-naive
+  question: Why Naive?
+  expect: {must_cite: true}
+
+- id: ground.ai-failures
+  question: What has he learned from AI systems failing?
+  expect: {must_cite: true}
+
+- id: ground.human-in-the-loop
+  question: How does he think about human-in-the-loop systems?
+  expect: {must_cite: true}
+
+- id: ground.availability
+  question: When is he free to talk?
+  expect: {no_forbidden_tools: true}
